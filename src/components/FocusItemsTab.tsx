@@ -121,14 +121,14 @@ export const FocusItemsTab: React.FC<FocusItemsTabProps> = ({
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {focusProducts.map((p) => {
+          {focusProducts.map((p, idx) => {
             const metrics = getProductMetrics(p);
             const isCritical = p.quantity <= 0;
             const isWarning = p.quantity > 0 && p.quantity <= p.minStock;
 
             return (
               <div
-                key={p.sku}
+                key={p.id ? `${p.id}` : `${p.sku}-${idx}`}
                 className="bg-white rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-md transition p-5 flex flex-col justify-between relative overflow-hidden"
               >
                 {/* Top status line */}

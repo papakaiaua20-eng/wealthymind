@@ -300,8 +300,8 @@ export const StockInTab: React.FC<StockInTabProps> = ({
                   className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:border-emerald-500 outline-none bg-white text-slate-800 font-medium cursor-pointer"
                 >
                   <option value="">-- เลือกสินค้า ({filteredProducts.length} รายการ) --</option>
-                  {filteredProducts.map((p) => (
-                    <option key={p.sku} value={p.sku}>
+                  {filteredProducts.map((p, idx) => (
+                    <option key={p.id ? `${p.id}` : `${p.sku}-${idx}`} value={p.sku}>
                       [{p.sku}] {p.name} (คงเหลือ: {p.quantity} {p.unit.split(' ')[0]})
                     </option>
                   ))}

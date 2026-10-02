@@ -560,8 +560,8 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
-                      {exportTargetProducts.slice(0, 5).map((p) => (
-                        <tr key={p.sku} className="hover:bg-slate-50">
+                      {exportTargetProducts.slice(0, 5).map((p, idx) => (
+                        <tr key={p.id ? `${p.id}` : `${p.sku}-${idx}`} className="hover:bg-slate-50">
                           <td className="p-2 font-mono text-slate-600">{p.sku}</td>
                           <td className="p-2 font-medium text-slate-900">{p.name}</td>
                           <td className="p-2 text-slate-500">{p.category}</td>

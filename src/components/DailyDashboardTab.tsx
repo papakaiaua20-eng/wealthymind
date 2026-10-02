@@ -757,7 +757,7 @@ export const DailyDashboardTab: React.FC<DailyDashboardTabProps> = ({
                   const isLowStock = item.currentStock > 0 && item.currentStock <= item.minStock;
 
                   return (
-                    <tr key={item.sku} className="hover:bg-slate-50/80 transition">
+                    <tr key={`${item.sku}-${idx}`} className="hover:bg-slate-50/80 transition">
                       <td className="py-3 px-4 text-center font-mono text-slate-400">
                         {idx + 1}
                       </td>

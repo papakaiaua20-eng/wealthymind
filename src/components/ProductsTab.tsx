@@ -701,12 +701,12 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({
                   </td>
                 </tr>
               ) : (
-                sortedProducts.map((p) => {
+                sortedProducts.map((p, idx) => {
                   const isOutOfStock = p.quantity <= 0;
                   const isLowStock = p.quantity > 0 && p.quantity <= p.minStock;
 
                   return (
-                    <tr key={p.sku} className="hover:bg-slate-50/80 transition group">
+                    <tr key={p.id ? `${p.id}` : `${p.sku}-${idx}`} className="hover:bg-slate-50/80 transition group">
                       {/* Focus Star */}
                       <td className="py-3 px-4 text-center">
                         <button
@@ -823,12 +823,12 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({
               )}
             </div>
           ) : (
-            sortedProducts.map((p) => {
+            sortedProducts.map((p, idx) => {
               const isOutOfStock = p.quantity <= 0;
               const isLowStock = p.quantity > 0 && p.quantity <= p.minStock;
 
               return (
-                <div key={p.sku} className="p-4 space-y-2.5 hover:bg-slate-50 transition">
+                <div key={p.id ? `${p.id}` : `${p.sku}-${idx}`} className="p-4 space-y-2.5 hover:bg-slate-50 transition">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <button

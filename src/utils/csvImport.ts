@@ -544,6 +544,7 @@ export function processImportRows(
 
   const parsedRows: ParsedImportRow[] = [];
   let generatedSkuCounter = maxSkuNum + 1;
+  const seenImportSkus = new Map<string, number>();
 
   dataRows.forEach((row) => {
     // Skip completely empty rows
@@ -591,6 +592,17 @@ export function processImportRows(
       }
     }
 
+    // Deduplicate SKU within this imported set
+    let finalSku = rawSku.trim();
+    const lowerSku = finalSku.toLowerCase();
+    if (seenImportSkus.has(lowerSku)) {
+      const count = seenImportSkus.get(lowerSku)! + 1;
+      seenImportSkus.set(lowerSku, count);
+      finalSku = `${finalSku}-${count}`;
+    } else {
+      seenImportSkus.set(lowerSku, 1);
+    }
+
     // Parse quantities safely
     const cleanQtyStr = rawQty.replace(/,/g, '').replace(/[^\d.-]/g, '');
     const parsedQty = cleanQtyStr ? parseFloat(cleanQtyStr) || 0 : 0;
@@ -612,7 +624,7 @@ export function processImportRows(
     parsedRows.push({
       raw: rawObj,
       product: {
-        sku: rawSku.trim(),
+        sku: finalSku,
         name,
         category,
         unit,

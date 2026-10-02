@@ -52,15 +52,40 @@ export default function App() {
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
   const [isImportModalOpen, setIsImportModalOpen] = useState<boolean>(false);
 
+  // Helper to guarantee 100% unique SKUs and IDs across products
+  const ensureUniqueProducts = (list: Product[]): Product[] => {
+    const skuCount = new Map<string, number>();
+    return list.map((p, idx) => {
+      const rawSku = (p.sku || '').trim() || `SKU-${idx + 1}`;
+      const lower = rawSku.toLowerCase();
+      let uniqueSku = rawSku;
+      if (skuCount.has(lower)) {
+        const count = skuCount.get(lower)! + 1;
+        skuCount.set(lower, count);
+        uniqueSku = `${rawSku}-${count}`;
+      } else {
+        skuCount.set(lower, 1);
+      }
+      return {
+        ...p,
+        sku: uniqueSku,
+        id: p.id || `P-${idx + 1}-${uniqueSku}`,
+      };
+    });
+  };
+
   // Core Data States
   const [products, setProducts] = useState<Product[]>(() => {
     const saved = localStorage.getItem('local_stock_products');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return ensureUniqueProducts(parsed);
+        }
       } catch {}
     }
-    return INITIAL_DEMO_PRODUCTS;
+    return ensureUniqueProducts(INITIAL_DEMO_PRODUCTS);
   });
 
   const [transactions, setTransactions] = useState<StockTransaction[]>(() => {
@@ -115,7 +140,7 @@ export default function App() {
           // Fetch products from sheet
           const sheetProducts = await fetchProductsFromSheet(currentSheet.id, token);
           if (sheetProducts && sheetProducts.length > 0) {
-            setProducts(sheetProducts);
+            setProducts(ensureUniqueProducts(sheetProducts));
           } else if (products.length > 0) {
             // First time sheet empty, push current products
             await syncProductsToSheet(currentSheet.id, products, token);
@@ -369,12 +394,13 @@ export default function App() {
       finalProducts = [...newItems, ...modifiedList, ...unmodified];
     }
 
-    setProducts(finalProducts);
+    const uniqueFinal = ensureUniqueProducts(finalProducts);
+    setProducts(uniqueFinal);
 
     // Sync to Google Sheets if connected
     const token = await getAccessToken();
     if (token && spreadsheetInfo) {
-      await syncProductsToSheet(spreadsheetInfo.id, finalProducts, token);
+      await syncProductsToSheet(spreadsheetInfo.id, uniqueFinal, token);
     }
 
     showNotification(

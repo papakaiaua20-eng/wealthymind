@@ -562,7 +562,7 @@ export const BalanceReportTab: React.FC<BalanceReportTabProps> = ({
                   const isLowStock = p.quantity > 0 && p.quantity <= p.minStock;
 
                   return (
-                    <tr key={p.sku} className="hover:bg-slate-50/70 transition">
+                    <tr key={p.id ? `${p.id}` : `${p.sku}-${idx}`} className="hover:bg-slate-50/70 transition">
                       <td className="py-3 px-4 text-center text-xs text-slate-400 font-mono">
                         {idx + 1}
                       </td>

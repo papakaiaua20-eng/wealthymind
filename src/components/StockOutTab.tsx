@@ -184,8 +184,8 @@ export const StockOutTab: React.FC<StockOutTabProps> = ({
                   className="w-full px-3 py-2.5 text-sm rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-100 outline-none bg-white text-slate-800 font-medium cursor-pointer"
                 >
                   <option value="">-- กรุณาเลือกสินค้าจากรายการ ({filteredProducts.length}) --</option>
-                  {filteredProducts.map((p) => (
-                    <option key={p.sku} value={p.sku}>
+                  {filteredProducts.map((p, idx) => (
+                    <option key={p.id ? `${p.id}` : `${p.sku}-${idx}`} value={p.sku}>
                       [{p.sku}] {p.name} (คงเหลือ: {p.quantity} {p.unit.split(' ')[0]})
                     </option>
                   ))}
