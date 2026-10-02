@@ -1,0 +1,6 @@
+{
+  "name": "ระบบจัดการสต็อกสินค้า (Smart Stock Manager)",
+  "description": "ระบบบริหารจัดการสต๊อกสินค้า ตัดสต๊อก รับเข้าสินค้า รายงานสินค้าคงเหลือ สินค้าโฟกัส และแดชบอร์ดรายวัน เชื่อมต่อกับ Google Sheets",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
