@@ -1,0 +1,1131 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>จิตวิทยามั่งคั่ง · ค้นหาบุคลิกภาพของเรา</title>
+<meta name="description" content="แบบฝึกหัดสำรวจตัวเอง ค้นหาบุคลิกภาพของเราใน 5 แบบ พร้อมวิธีอยู่ร่วมกับคนทั้ง 5 บุคลิก จากหนังสือจิตวิทยามั่งคั่ง">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&amp;family=IBM+Plex+Sans+Thai:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F3F5F8}
+a{color:#3243A8}a:hover{color:#1F2C7A}
+button{font-family:inherit}
+button:disabled{cursor:default}
+.nudge-arrow{animation:nudge 1.1s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+@media (prefers-reduced-motion: reduce){.nudge-arrow{animation:none}}
+@media (max-width:600px){
+  .pad{padding:28px 20px !important}
+  .pad-s{padding:22px 16px !important}
+  .h-xl{font-size:34px !important}
+  .h-l{font-size:26px !important}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="tpl">
+<div style="min-height: 100vh; background: #F3F5F8; color: #1B2430; font-family: 'IBM Plex Sans Thai', system-ui, sans-serif; font-size: 16px; line-height: 1.7; padding: 40px 16px 64px; box-sizing: border-box">
+<div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px">
+
+<sc-if value="{{showLogin}}">
+<div style="min-height: 70vh; display: flex; align-items: center; justify-content: center">
+<div class="pad" style="width: 100%; max-width: 520px; background: #FFFFFF; border-radius: 22px; padding: 44px 40px; display: flex; flex-direction: column; gap: 24px; box-shadow: 0 1px 2px rgba(20,30,50,0.06), 0 12px 32px rgba(20,30,50,0.06); box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 10px; text-align: center; align-items: center">
+<div style="width: 80px; height: 80px; border-radius: 22px; background: #3243A8; border: 3px solid #FBBF24; box-sizing: border-box; display: flex; align-items: center; justify-content: center"><svg width="58" height="58" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 26 L22 16 L32 21 L52 8" stroke="#FBBF24" stroke-width="4"></path><path d="M43 8 H52 V17" stroke="#FBBF24" stroke-width="4"></path><circle cx="32" cy="35" r="6" stroke="#FBBF24" stroke-width="3.6"></circle><path d="M21 57 c0-6 5-11 11-11 s11 5 11 11" stroke="#FBBF24" stroke-width="3.6"></path><circle cx="13" cy="40" r="4.5" stroke="#FFFFFF" stroke-width="3.2"></circle><path d="M5 56 c0-4.5 3.5-8 8-8" stroke="#FFFFFF" stroke-width="3.2"></path><circle cx="51" cy="40" r="4.5" stroke="#FFFFFF" stroke-width="3.2"></circle><path d="M59 56 c0-4.5-3.5-8-8-8" stroke="#FFFFFF" stroke-width="3.2"></path></svg></div>
+<div style="font-size: 14px; font-weight: 600; color: #3243A8; letter-spacing: 0.04em">จิตวิทยามั่งคั่ง</div>
+<h1 style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 32px; line-height: 1.3; font-weight: 700">ยินดีต้อนรับครับ</h1>
+<p style="margin: 0; color: #4A5565">กรอกชื่อของคุณก่อนเริ่ม เพื่อให้เราช่วยวิเคราะห์และสรุปผลในชื่อของคุณ</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 16px">
+<label style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-weight: 600">ชื่อเรียก</span>
+<input id="nick" type="text" value="{{nick}}" onChange="{{onNick}}" onKeydown="{{onNickKey}}" placeholder="ชื่อเล่น / ชื่อจริง" autocomplete="nickname" style="min-height: 52px; padding: 0 16px; border-radius: 12px; border: 1.5px solid #C9CFD8; font-family: inherit; font-size: 17px; color: #1B2430; background: #FFFFFF; box-sizing: border-box; width: 100%">
+</label>
+<div style="font-size: 14px; color: #5B6573">( สำหรับให้เราช่วยวิเคราะห์ ) ชื่อจะใช้แสดงในผลลัพธ์และไฟล์ PDF ของคุณเท่านั้น</div>
+</div>
+<button type="button" onClick="{{enter}}" disabled="{{noEnter}}" style="min-height: 54px; border: none; border-radius: 12px; background: #3243A8; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer; opacity: {{enterOpacity}}">เข้าสู่แบบทดสอบ →</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showIntro}}">
+<div style="display: flex; flex-direction: column; gap: 24px">
+<div class="pad" style="background: #FFFFFF; border-radius: 20px; padding: 48px 40px; display: flex; flex-direction: column; gap: 28px; box-shadow: 0 1px 2px rgba(20,30,50,0.06)">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 14px; font-weight: 600; color: #3243A8; letter-spacing: 0.04em">จิตวิทยามั่งคั่ง · แบบฝึกหัดสำรวจตัวเอง</div>
+<div style="font-size: 18px; font-weight: 600">สวัสดีครับ คุณ{{displayName}}</div>
+<h1 class="h-xl" style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 44px; line-height: 1.25; font-weight: 700">ค้นหาบุคลิกภาพและตัวตนของเรา</h1>
+<p style="margin: 0; font-size: 18px; color: #4A5565; max-width: 700px">เคยรู้สึกไหมครับว่า บางครั้งคนรอบข้างกลับมองเห็นความสามารถของเรา มากกว่าที่เรามองเห็นตัวเองเสียอีก? ลองตอบ 5 สถานการณ์นี้ตามความเป็นจริง แล้วมาค้นหาจุดแข็งที่ซ่อนอยู่ พร้อมวิธีอยู่ร่วมกับคนทั้ง 5 บุคลิกให้เข้าใจกันมากขึ้น</p>
+<p style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 600; color: #1B2430">เพราะบางครั้ง สิ่งที่เราทำได้ดีที่สุด อาจเป็นสิ่งที่เรามองข้ามมากที่สุดก็ได้</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; border: 1px solid #E2E6EC">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 28px; font-weight: 700; color: #3243A8">1</div>
+<div style="font-weight: 600">เลือกได้มากกว่า 1 ข้อ</div>
+<div style="color: #4A5565; font-size: 15px">คนเราไม่ได้มีนิสัยเพียงด้านเดียว เลือกทุกข้อที่ตรงกับเรา แต่ละข้อได้ 1 คะแนน</div>
+</div>
+<div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; border: 1px solid #E2E6EC">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 28px; font-weight: 700; color: #3243A8">2</div>
+<div style="font-weight: 600">ค้นพบบุคลิกผสมของเรา</div>
+<div style="color: #4A5565; font-size: 15px">รู้ว่าเรามีบุคลิกเด่นด้านไหน จุดแข็งคืออะไร และพลังที่ซ่อนอยู่ในตัวเรา</div>
+</div>
+<div style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; border: 1px solid #E2E6EC">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 28px; font-weight: 700; color: #3243A8">3</div>
+<div style="font-weight: 600">เข้าใจคนรอบข้าง</div>
+<div style="color: #4A5565; font-size: 15px">วิธีปรับตัวและพูดกับคนแต่ละแบบ ทั้งที่ทำงาน เพื่อน และครอบครัว</div>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span aria-hidden="true" style="display: inline-flex; align-items: center; color: #D97706"><svg class="nudge-arrow" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="M13 6l6 6-6 6"></path></svg></span>
+<button type="button" onClick="{{start}}" style="min-height: 60px; padding: 0 36px; border: 3px solid #B45309; border-radius: 14px; background: #FBBF24; color: #1B2430; font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 18px rgba(217,119,6,0.35)">เริ่มค้นหาตัวตนของเรา</button>
+</div>
+<span style="color: #5B6573; font-size: 14px">ใช้เวลาประมาณ 2 นาที · ไม่มีคำตอบถูกหรือผิด ขอเพียงตอบตามความเป็นจริง</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 8px 4px 0">
+<h2 style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 26px; font-weight: 700">ไขความลับตัวตน 5 ประเภท</h2>
+<p style="margin: 0; color: #4A5565">แต่ละคนมีพื้นฐานความคิด อารมณ์ และพฤติกรรมที่ไม่เหมือนกัน และนี่แหละครับ คือสิ่งที่ทำให้แต่ละคนมีคุณค่าในแบบของตัวเอง</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<sc-for list="{{types}}" as="t">
+<div style="flex: 1 1 280px; min-width: 0; background: #FFFFFF; border-radius: 16px; padding: 14px 14px 22px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(20,30,50,0.06)">
+<x-illus k="{{t.key}}" h="150" r="12"></x-illus>
+<div style="display: flex; align-items: center; gap: 12px; padding: 0 8px">
+<span style="flex: none; width: 36px; height: 36px; border-radius: 10px; background: {{t.color}}; color: #FFFFFF; font-weight: 700; display: flex; align-items: center; justify-content: center">{{t.key}}</span>
+<div style="display: flex; flex-direction: column">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 19px; font-weight: 700; line-height: 1.3">{{t.name}}</div>
+<div style="font-size: 12px; color: #5B6573; letter-spacing: 0.04em">{{t.en}}</div>
+</div>
+</div>
+<div style="font-size: 15px; color: #3A4452; padding: 0 8px">{{t.about}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showQuiz}}">
+<div class="pad" style="background: #FFFFFF; border-radius: 20px; padding: 40px; display: flex; flex-direction: column; gap: 28px; box-shadow: 0 1px 2px rgba(20,30,50,0.06)">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; font-size: 14px; color: #5B6573; font-weight: 500">
+<span>ข้อ {{qNum}} จาก {{qTotal}}</span>
+<span style="display: inline-flex; align-items: center; gap: 12px">ตอบแล้ว {{answeredCount}} คำถาม<button type="button" onClick="{{restart}}" style="min-height: 44px; padding: 0 12px; border: none; background: transparent; color: #3243A8; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>เริ่มใหม่</button></span>
+</div>
+<div style="height: 8px; border-radius: 999px; background: #E6E9EF; overflow: hidden">
+<div style="height: 100%; width: {{progressPct}}%; background: #3243A8; border-radius: 999px; transition: width 0.25s"></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<h2 class="h-l" style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 30px; line-height: 1.35; font-weight: 700">{{qText}}</h2>
+<div style="color: #4A5565; font-size: 15px">เลือกทุกข้อที่อ่านแล้วรู้สึกว่า “นี่แหละเรา” เลือกได้มากกว่า 1 ข้อ · เลือกแล้ว {{pickedCount}} ข้อ</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{options}}" as="o">
+<button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="display: flex; align-items: center; gap: 16px; width: 100%; min-height: 60px; padding: 12px 18px; text-align: left; border-radius: 14px; border: 2px solid {{o.border}}; background: {{o.bg}}; color: #1B2430; font-size: 17px; cursor: pointer">
+<span style="flex: none; width: 34px; height: 34px; border-radius: 10px; background: {{o.badgeBg}}; color: {{o.badgeFg}}; display: flex; align-items: center; justify-content: center; font-weight: 600">{{o.key}}</span>
+<span style="line-height: 1.6">{{o.text}}</span>
+</button>
+</sc-for>
+</div>
+<div style="display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<button type="button" onClick="{{prev}}" disabled="{{noPrev}}" style="min-height: 48px; padding: 0 22px; border-radius: 12px; border: 1px solid #C9CFD8; background: #FFFFFF; color: #1B2430; font-size: 16px; cursor: pointer">← ย้อนกลับ</button>
+<button type="button" onClick="{{next}}" disabled="{{noNext}}" style="min-height: 48px; padding: 0 26px; border-radius: 12px; border: none; background: #3243A8; color: #FFFFFF; font-size: 16px; font-weight: 600; cursor: pointer; opacity: {{nextOpacity}}">{{nextLabel}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showResult}}">
+<div style="display: flex; flex-direction: column; gap: 28px">
+
+<div class="pad" style="background: #1B2430; color: #FFFFFF; border-radius: 22px; padding: 44px 40px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap">
+<div style="font-size: 14px; font-weight: 600; color: #B9C2F0; letter-spacing: 0.06em">ผลของคุณ</div>
+<button type="button" onClick="{{restart}}" style="min-height: 44px; padding: 0 18px; border-radius: 12px; border: 1px solid #4A5568; background: transparent; color: #FFFFFF; font-size: 15px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>รีเซ็ตและเริ่มใหม่</button>
+</div>
+<x-combo keys="{{comboKeyStr}}" h="260"></x-combo>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<sc-for list="{{comboTypes}}" as="c">
+<div style="display: flex; align-items: center; gap: 14px; padding: 12px 20px 12px 12px; border-radius: 18px; background: #26303E">
+<span style="flex: none; width: 64px; height: 64px; border-radius: 16px; background: {{c.color}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><x-icon k="{{c.key}}" s="34"></x-icon></span>
+<div style="display: flex; flex-direction: column; line-height: 1.35">
+<span style="font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700">{{c.name}}</span>
+<span style="font-size: 13px; color: #AEB7C5; letter-spacing: 0.04em">{{c.en}}</span>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="font-size: 17px; color: #D5DAE3">คุณ{{displayName}} คือ{{comboNames}}</div>
+<h1 class="h-xl" style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 44px; line-height: 1.25; font-weight: 700">“{{combo.nick}}”</h1>
+</div>
+<p style="margin: 0; font-size: 18px; line-height: 1.9; color: #E8EBF0">{{combo.you}}</p>
+<div style="padding: 24px 26px; border-radius: 16px; background: #26303E; border: 1px solid #3A4656">
+<p style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 23px; line-height: 1.55; font-weight: 600">{{combo.quote}}</p>
+</div>
+<sc-if value="{{isMixed}}">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="font-size: 15px; color: #C7CEDA">คุณได้คะแนนสูงสุดเท่ากันหลายด้าน เลือกด้านที่อยากใช้เป็นมุมมองหลักในคำแนะนำการอยู่ร่วมกับคนอื่น</div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<sc-for list="{{lensPills}}" as="p">
+<button type="button" onClick="{{p.pick}}" aria-pressed="{{p.pressed}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 2px solid {{p.color}}; background: {{p.bg}}; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer">{{p.name}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+</div>
+
+<x-save></x-save>
+
+<div class="pad" style="background: #FFFFFF; border-radius: 20px; padding: 36px 40px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(20,30,50,0.06)">
+<h2 style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 28px; font-weight: 700">เมื่อพลังของคุณผสานกัน</h2>
+<div style="padding: 22px 24px; border-radius: 16px; background: #EDF7F4; border: 1.5px solid #B5DDD3; display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: 'Anuphan', sans-serif; font-weight: 700; color: #0F6B5E; font-size: 22px">พลังที่คุณมี</div>
+<div style="font-size: 17px; white-space: pre-line; line-height: 1.85">{{combo.power}}</div>
+</div>
+<div style="padding: 22px 24px; border-radius: 16px; background: #FDF3EC; border: 1.5px solid #F1CDB4; display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: 'Anuphan', sans-serif; font-weight: 700; color: #9A3412; font-size: 22px">สิ่งที่ต้องรู้เท่าทัน</div>
+<div style="font-size: 17px; white-space: pre-line; line-height: 1.85">{{combo.watch}}</div>
+</div>
+<p style="margin: 0; color: #4A5565">จุดแข็งและข้อจำกัดมักอยู่ใกล้กันครับ หากรู้จักใช้ให้ถูกทาง สิ่งที่เคยถูกมองว่าเป็นข้อเสีย จะกลายเป็นพลังที่พาเราไปได้ไกลกว่าเดิม</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 4px 4px 0">
+<h2 style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 28px; font-weight: 700">บุคลิกเด่นของคุณ</h2>
+</div>
+<sc-for list="{{comboTypes}}" as="c">
+<div class="pad-s" style="background: {{c.tint}}; border: 3px solid {{c.color}}; border-radius: 20px; padding: 32px 36px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 16px">
+<span style="flex: none; width: 56px; height: 56px; border-radius: 14px; background: {{c.color}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><x-icon k="{{c.key}}" s="30"></x-icon></span>
+<div style="display: flex; flex-direction: column">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 26px; font-weight: 700; line-height: 1.3; color: {{c.ink}}">{{c.name}}</div>
+<div style="font-size: 13px; color: #5B6573; font-weight: 500; letter-spacing: 0.04em">{{c.en}}</div>
+</div>
+</div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 10px">
+<x-illus k="{{c.key}}" h="200" r="10"></x-illus>
+</div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; color: {{c.ink}}">จุดแข็ง</div>
+<div style="font-size: 16px; white-space: pre-line; line-height: 1.85">{{c.strength}}</div>
+</div>
+<div style="height: 1px; background: #E6E9EF"></div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; color: {{c.ink}}">จุดที่ควรพัฒนา</div>
+<div style="font-size: 16px; white-space: pre-line; line-height: 1.85">{{c.develop}}</div>
+</div>
+<div style="height: 1px; background: #E6E9EF"></div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; color: {{c.ink}}">พลังที่ซ่อนอยู่</div>
+<div style="font-size: 16px; white-space: pre-line; line-height: 1.85">{{c.hidden}}</div>
+</div>
+</div>
+</div>
+</sc-for>
+
+<div class="pad" style="background: #FFFFFF; border-radius: 20px; padding: 36px 40px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(20,30,50,0.06)">
+<h2 style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 24px; font-weight: 700">สรุปคะแนน</h2>
+<div style="color: #4A5565; font-size: 15px">รวม {{totalScore}} คะแนน จาก {{qTotal}} คำถาม</div>
+<sc-for list="{{scoreRows}}" as="r">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; gap: 8px; font-size: 16px">
+<span><span style="font-weight: 700; color: {{r.color}}">{{r.key}}</span> · {{r.name}} <span style="color: #5B6573">({{r.en}})</span></span>
+<span style="font-weight: 700">{{r.score}}</span>
+</div>
+<div style="height: 12px; border-radius: 999px; background: #E6E9EF; overflow: hidden">
+<div style="height: 100%; width: {{r.pct}}%; background: {{r.color}}; border-radius: 999px"></div>
+</div>
+</div>
+</sc-for>
+<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px">
+<div style="padding: 14px 18px; border-radius: 12px; background: #F3F5F8; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap"><span style="color: #5B6573">คะแนนสูงที่สุด</span><span style="font-weight: 700">{{primaryNames}}</span></div>
+<div style="padding: 14px 18px; border-radius: 12px; background: #F3F5F8; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap"><span style="color: #5B6573">คะแนนรองลงมา</span><span style="font-weight: 700">{{secondNames}}</span></div>
+<div style="padding: 14px 18px; border-radius: 12px; background: #F3F5F8; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap"><span style="color: #5B6573">อีกด้านที่มีแนวโน้มผสมอยู่</span><span style="font-weight: 700">{{thirdNames}}</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 16px; padding-top: 16px">
+<h2 class="h-l" style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 34px; line-height: 1.3; font-weight: 700">เมื่อต้องอยู่ร่วมกับทั้ง 5 บุคลิก</h2>
+<div class="pad-s" style="background: #FFFFFF; border: 1.5px solid #C9D0F2; border-radius: 18px; padding: 26px 30px; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 22px; line-height: 1.6; font-weight: 700; color: #1B2430">เราแต่ละคนมีตัวตน และนิสัยที่ต่างกัน</p>
+<p style="margin: 0; font-size: 18px; line-height: 1.8; color: #3243A8; font-weight: 600">“ สังคมผู้คนรอบข้างมีส่วนสำคัญ<br>ต่อเส้นทางความสำเร็จของเรา ”</p>
+<div style="height: 1px; background: #E6E9EF"></div>
+<div style="padding: 22px 24px; border-radius: 16px; background: #FFF7E0; border: 2px solid #FBBF24">
+<p style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 21px; line-height: 1.75; font-weight: 700; color: #1B2430">เมื่อเราเข้าใจผู้อื่นที่แตกต่างกัน และรู้จักปรับตัวเข้าหา<br>เราจะสร้างความสัมพันธ์ที่ดี เปิดโอกาสใหม่ ๆ ก้าวไปสู่<span style="color: #B45309">ชีวิตที่ประสบความสำเร็จ และมั่งคั่ง</span>ได้ง่ายขึ้น</p>
+</div>
+<p style="margin: 0; font-size: 17px; line-height: 1.85; color: #1B2430; font-weight: 700">พร้อมคำแนะนำเฉพาะสำหรับเรา ในแบบ<span style="color: #3243A8">{{lensName}}</span></p>
+</div>
+</div>
+
+<sc-for list="{{guides}}" as="g">
+<div class="pad-s" style="background: {{g.tint}}; border: 3px solid {{g.color}}; border-radius: 20px; padding: 30px 34px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+<span style="flex: none; width: 52px; height: 52px; border-radius: 14px; background: {{g.color}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><x-icon k="{{g.key}}" s="28"></x-icon></span>
+<div style="display: flex; flex-direction: column; flex: 1 1 200px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 24px; font-weight: 700; line-height: 1.3; color: {{g.ink}}">เมื่อเจอ{{g.name}}</div>
+<div style="font-size: 13px; color: #5B6573; letter-spacing: 0.04em">{{g.en}}</div>
+</div>
+<sc-if value="{{g.isYou}}">
+<span style="font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; color: {{g.ink}}; border: 1px solid {{g.line}}">แบบเดียวกับคุณ</span>
+</sc-if>
+</div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<x-combo keys="{{comboKeyStr}}" h="180"></x-combo>
+<div style="text-align: center; font-size: 15px; font-weight: 600; color: #1B2430">คุณ · {{comboNames}}</div>
+</div>
+<div style="flex: none; margin: 0 auto; width: 48px; height: 48px; border-radius: 999px; background: {{g.color}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center" aria-hidden="true">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h12l-3-3M17 17H5l3 3"></path></svg>
+</div>
+<div style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
+<x-illus k="{{g.key}}" h="180" r="12"></x-illus>
+<div style="text-align: center; font-size: 15px; font-weight: 600; color: {{g.ink}}">เขา · {{g.name}}</div>
+</div>
+</div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; color: {{g.ink}}">ดูนิสัย ก็รู้ว่าเขาเป็นคนแบบไหน</div>
+<div style="font-size: 16px; white-space: pre-line; line-height: 1.85">{{g.spot}}</div>
+</div>
+<div style="height: 1px; background: #E6E9EF"></div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; color: {{g.ink}}">ในใจลึก ๆ ที่เขาต้องการ</div>
+<div style="font-size: 16px; white-space: pre-line; line-height: 1.85">{{g.needs}}</div>
+</div>
+<div style="height: 1px; background: #E6E9EF"></div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; color: {{g.ink}}">อย่าเพิ่งเข้าใจเขาผิด</div>
+<div style="font-size: 16px; white-space: pre-line; line-height: 1.85">{{g.accept}}</div>
+</div>
+</div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 22px; font-weight: 700; line-height: 1.4; color: {{g.ink}}">ปรับตัวเมื่อทำงานร่วมกัน ให้งานเดินดีขึ้น</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; align-self: flex-start; margin-top: 4px; padding: 8px 14px; border-radius: 10px; background: {{g.color}}; color: #FFFFFF; font-family: 'Anuphan', sans-serif; font-size: 16px; font-weight: 600; line-height: 1.5"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M20 6 9 17l-5-5"></path></svg><span>ผลลัพธ์: ทำแบบนี้ แล้วงานจะลื่นไหลและเขาจะทุ่มเทให้เต็มที่</span></div>
+</div>
+<sc-for list="{{g.workItems}}" as="w">
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; border-radius: 14px; background: {{g.tint}}; border: 1px solid {{g.line}}">
+<span style="flex: none; width: 34px; height: 34px; border-radius: 999px; background: {{g.color}}; color: #FFFFFF; font-family: 'Anuphan', sans-serif; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{w.n}}</span>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.6; color: {{g.ink}}">{{w.lead}}</div>
+<div style="font-size: 16px; font-weight: 500; color: #2A3340; line-height: 1.75">{{w.why}}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 22px; font-weight: 700; line-height: 1.4; color: {{g.ink}}">ปรับตัวให้เข้าใจกัน กับเพื่อนและครอบครัว</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; align-self: flex-start; margin-top: 4px; padding: 8px 14px; border-radius: 10px; background: {{g.color}}; color: #FFFFFF; font-family: 'Anuphan', sans-serif; font-size: 16px; font-weight: 600; line-height: 1.5"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 3px"><path d="M20 6 9 17l-5-5"></path></svg><span>ผลลัพธ์: ความสัมพันธ์ที่ดี เริ่มจากการเข้าใจว่าเขาต้องการอะไร</span></div>
+</div>
+<sc-for list="{{g.homeItems}}" as="w">
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; border-radius: 14px; background: {{g.tint}}; border: 1px solid {{g.line}}">
+<span style="flex: none; width: 34px; height: 34px; border-radius: 999px; background: {{g.color}}; color: #FFFFFF; font-family: 'Anuphan', sans-serif; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{w.n}}</span>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.6; color: {{g.ink}}">{{w.lead}}</div>
+<div style="font-size: 16px; font-weight: 500; color: #2A3340; line-height: 1.75">{{w.why}}</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="background: #FFFFFF; border-radius: 14px; padding: 18px 22px; border: 1.5px dashed {{g.line}}; display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 19px; font-weight: 700; color: #3A4452">ประโยคที่ใช้ได้เลย</div>
+<div style="font-size: 17px; font-weight: 500">{{g.say}}</div>
+</div>
+<div style="background: #1B2430; color: #FFFFFF; border-radius: 14px; padding: 18px 22px; display: flex; flex-direction: column; gap: 4px">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 19px; font-weight: 700; color: #C5CDF5">สำหรับ{{lensName}}อย่างคุณ</div>
+<div style="font-size: 16px; white-space: pre-line; line-height: 1.85">{{g.forYou}}</div>
+</div>
+</div>
+</sc-for>
+
+<x-save></x-save>
+
+<div class="pad" style="background: #FFFFFF; border-radius: 20px; padding: 36px 40px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 1px 2px rgba(20,30,50,0.06)">
+<h2 style="margin: 0; font-family: 'Anuphan', sans-serif; font-size: 26px; font-weight: 700">ลองถามตัวเองต่อ</h2>
+<ol style="margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px">
+<li>คนรอบข้างมักมาขอความช่วยเหลือจากเราในเรื่องใด?</li>
+<li>เราชอบทำอะไร และมีเรื่องไหนที่ทำแล้วรู้สึกเป็นตัวเองมากที่สุด?</li>
+<li>อีก 3–5 ปีข้างหน้า เราอยากมีชีวิตแบบไหน?</li>
+<li>วันนี้เราควรเริ่มทำอะไร เพื่อเข้าใกล้เป้าหมายที่ตั้งใจไว้?</li>
+</ol>
+<p style="margin: 0; color: #4A5565">ลองถามคนใกล้ตัวดูบ้างนะครับว่า เขามองเห็นจุดเด่นอะไรในตัวเรา เพราะบางครั้งคนอื่นอาจมองเห็นความสามารถที่เราไม่เคยสังเกตมาก่อน</p>
+<p style="margin: 8px 0 0; font-family: 'Anuphan', sans-serif; font-size: 22px; line-height: 1.55; font-weight: 600">ความมั่งคั่งที่แท้จริง เริ่มต้นจากการเข้าใจตัวเอง เข้าใจผู้อื่น และรู้จักนำสิ่งที่มีมาต่อยอด เพื่อสร้างชีวิตที่ประสบความสำเร็จและมีความสุขอย่างยั่งยืนครับ</p>
+<div style="font-size: 14px; color: #5B6573">— จิตวิทยามั่งคั่ง</div>
+<p style="margin: 0; color: #5B6573; font-size: 14px">หมายเหตุ: แบบฝึกหัดนี้เป็นเครื่องมือสำรวจตัวเองเบื้องต้น ไม่ใช่แบบทดสอบหรือเครื่องมือวินิจฉัยทางจิตวิทยาที่ผ่านการรับรองมาตรฐาน</p>
+<div>
+<button type="button" onClick="{{restart}}" style="min-height: 48px; padding: 0 24px; border-radius: 12px; border: none; background: #3243A8; color: #FFFFFF; font-size: 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>รีเซ็ตและเริ่มใหม่</button>
+</div>
+</div>
+
+</div>
+</sc-if>
+
+</div>
+</div>
+</template>
+
+<template id="tpl-save">
+<div class="pad-s" style="background: #FFFFFF; border-radius: 20px; padding: 24px 28px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 1px 2px rgba(20,30,50,0.06)">
+<div style="font-family: 'Anuphan', sans-serif; font-size: 20px; font-weight: 700">เก็บผลลัพธ์ของคุณไว้ หรือส่งต่อให้คนสำคัญ</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<button type="button" onClick="{{downloadPdf}}" disabled="{{pdfBusy}}" style="min-height: 52px; padding: 0 24px; border: none; border-radius: 12px; background: #3243A8; color: #FFFFFF; font-size: 17px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>ดาวน์โหลด PDF</button>
+<button type="button" onClick="{{sharePdf}}" disabled="{{pdfBusy}}" style="min-height: 52px; padding: 0 24px; border-radius: 12px; border: 1.5px solid #3243A8; background: #FFFFFF; color: #3243A8; font-size: 17px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"></path></svg>แชร์ผลลัพธ์</button>
+</div>
+<sc-if value="{{hasPdfMsg}}">
+<div role="status" style="font-size: 15px; color: #3A4452">{{pdfMsg}}</div>
+</sc-if>
+</div>
+</template>
+
+<script>
+(function () {
+'use strict';
+
+/* ---------- ภาพประกอบ ---------- */
+var ICONS = {
+  A: '<circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.5"></circle>',
+  B: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"></path><path d="M8.5 10.5h7M8.5 14h4.5"></path>',
+  C: '<path d="M12 20.5 4.6 13.3a4.8 4.8 0 0 1 6.8-6.8l.6.6.6-.6a4.8 4.8 0 0 1 6.8 6.8z"></path>',
+  D: '<rect x="5" y="4.5" width="14" height="16.5" rx="2"></rect><path d="M9 3h6v3H9z"></path><path d="M8.5 12l2 2 4-4M8.5 17h7"></path>',
+  E: '<path d="M4 7h3c3 0 4 2 5 5s2 5 5 5h3"></path><path d="M4 17h3c1.5 0 2.5-.6 3.3-1.6M13.7 8.6C14.5 7.6 15.5 7 17 7h3"></path><path d="M17 4l3 3-3 3M17 14l3 3-3 3"></path>'
+};
+function iconSvg(k, s) {
+  return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[k] || '') + '</svg>';
+}
+
+var ILLUS = {
+  A: ['ภาพประกอบนักมุ่งผลลัพธ์ คนกำลังปีนภูเขาไปสู่ธงบนยอด', '<circle cx="262" cy="48" r="22" fill="#FFD9BF"></circle><path d="M14 186 L112 78 L160 124 L204 88 L306 186 Z" fill="#F8C9A8"></path><path d="M56 186 L150 62 L244 186 Z" fill="#F59E6B"></path><path d="M126 92 L150 62 L170 88 L158 84 L148 94 L138 86 Z" fill="#FFF4EC"></path><path d="M150 62 L150 26" stroke="#9A3412" stroke-width="3" stroke-linecap="round"></path><path d="M150 26 L180 35 L150 44 Z" fill="#C2410C"></path><path d="M104 140 Q124 108 144 72" stroke="#C2410C" stroke-width="2.5" stroke-dasharray="4 6" fill="none" stroke-linecap="round"></path><circle cx="98" cy="128" r="8" fill="#9A3412"></circle><path d="M98 136 L104 156" stroke="#9A3412" stroke-width="7" stroke-linecap="round"></path><path d="M100 142 L114 130" stroke="#9A3412" stroke-width="5" stroke-linecap="round"></path><path d="M104 156 L96 172 M104 156 L114 168" stroke="#9A3412" stroke-width="5" stroke-linecap="round"></path><rect x="0" y="186" width="320" height="14" fill="#F2C8AC"></rect>'],
+  B: ['ภาพประกอบนักสื่อสาร คนกำลังพูดพร้อมกล่องคำพูดและผู้ฟัง', '<circle cx="54" cy="52" r="18" fill="#DDD6FE"></circle><circle cx="292" cy="40" r="10" fill="#C4B5FD"></circle><rect x="150" y="30" width="134" height="66" rx="20" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="2"></rect><path d="M168 94 L158 116 L190 95 Z" fill="#FFFFFF"></path><path d="M166 95 L158 116 L188 96" stroke="#C4B5FD" stroke-width="2" fill="none" stroke-linejoin="round"></path><rect x="170" y="50" width="94" height="9" rx="4.5" fill="#A78BFA"></rect><rect x="170" y="68" width="60" height="9" rx="4.5" fill="#DDD6FE"></rect><path d="M134 80 q10 8 0 16 M142 74 q16 14 0 28" stroke="#7C3AED" stroke-width="3" fill="none" stroke-linecap="round"></path><circle cx="104" cy="86" r="17" fill="#5B21B6"></circle><rect x="82" y="108" width="44" height="66" rx="22" fill="#7C3AED"></rect><path d="M120 124 L140 108" stroke="#7C3AED" stroke-width="9" stroke-linecap="round"></path><circle cx="206" cy="148" r="10" fill="#A78BFA"></circle><rect x="193" y="160" width="26" height="26" rx="12" fill="#C4B5FD"></rect><circle cx="242" cy="144" r="10" fill="#8B5CF6"></circle><rect x="229" y="156" width="26" height="30" rx="12" fill="#A78BFA"></rect><circle cx="278" cy="148" r="10" fill="#A78BFA"></circle><rect x="265" y="160" width="26" height="26" rx="12" fill="#C4B5FD"></rect><rect x="0" y="186" width="320" height="14" fill="#E4DAFB"></rect>'],
+  C: ['ภาพประกอบนักประสานสัมพันธ์ สองคนจับมือกันใต้รูปหัวใจ', '<circle cx="52" cy="54" r="14" fill="#B3DCD3"></circle><circle cx="276" cy="62" r="18" fill="#B3DCD3"></circle><path d="M160 74 L141 55 a11 11 0 0 1 19-13 a11 11 0 0 1 19 13 Z" fill="#2A9D8F"></path><path d="M232 40 L225 33 a4.5 4.5 0 0 1 7-5 a4.5 4.5 0 0 1 7 5 Z" fill="#5EB8AA"></path><path d="M88 36 L83 31 a3.5 3.5 0 0 1 5-4 a3.5 3.5 0 0 1 5 4 Z" fill="#5EB8AA"></path><circle cx="112" cy="98" r="17" fill="#0F5F56"></circle><rect x="90" y="120" width="44" height="66" rx="22" fill="#0F766E"></rect><circle cx="208" cy="98" r="17" fill="#2A9D8F"></circle><rect x="186" y="120" width="44" height="66" rx="22" fill="#5EB8AA"></rect><path d="M130 146 Q160 168 190 146" stroke="#0F766E" stroke-width="8" fill="none" stroke-linecap="round"></path><circle cx="160" cy="148" r="9" fill="#0F5F56"></circle><rect x="148" y="160" width="24" height="26" rx="11" fill="#2A9D8F"></rect><rect x="0" y="186" width="320" height="14" fill="#CDE9E2"></rect>'],
+  D: ['ภาพประกอบนักวางแผน คนชี้ไปที่กระดานเช็กลิสต์และปฏิทิน', '<rect x="26" y="34" width="54" height="48" rx="8" fill="#FFFFFF" stroke="#BED0F6" stroke-width="2"></rect><rect x="26" y="34" width="54" height="13" rx="6" fill="#93B2F2"></rect><circle cx="40" cy="60" r="3" fill="#93B2F2"></circle><circle cx="53" cy="60" r="3" fill="#1D4ED8"></circle><circle cx="66" cy="60" r="3" fill="#93B2F2"></circle><circle cx="40" cy="71" r="3" fill="#93B2F2"></circle><circle cx="53" cy="71" r="3" fill="#93B2F2"></circle><path d="M186 150 L174 186 M256 150 L268 186" stroke="#93B2F2" stroke-width="5" stroke-linecap="round"></path><rect x="148" y="28" width="146" height="122" rx="12" fill="#FFFFFF" stroke="#BED0F6" stroke-width="2"></rect><rect x="166" y="50" width="16" height="16" rx="4" fill="none" stroke="#1D4ED8" stroke-width="2.5"></rect><path d="M169 58 l4 4 7-8" stroke="#1D4ED8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><rect x="192" y="54" width="84" height="8" rx="4" fill="#BED0F6"></rect><rect x="166" y="80" width="16" height="16" rx="4" fill="none" stroke="#1D4ED8" stroke-width="2.5"></rect><path d="M169 88 l4 4 7-8" stroke="#1D4ED8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path><rect x="192" y="84" width="64" height="8" rx="4" fill="#BED0F6"></rect><rect x="166" y="110" width="16" height="16" rx="4" fill="none" stroke="#93B2F2" stroke-width="2.5"></rect><rect x="192" y="114" width="74" height="8" rx="4" fill="#DCE6FB"></rect><circle cx="100" cy="98" r="17" fill="#1E3FA8"></circle><rect x="78" y="120" width="44" height="66" rx="22" fill="#1D4ED8"></rect><path d="M116 136 L150 112" stroke="#1D4ED8" stroke-width="9" stroke-linecap="round"></path><rect x="0" y="186" width="320" height="14" fill="#D6E2FA"></rect>'],
+  E: ['ภาพประกอบนักผสมผสาน คนตรงกลางเชื่อมจุดสีต่าง ๆ เข้าด้วยกัน', '<path d="M160 120 L62 58 M160 120 L258 58 M160 120 L54 154 M160 120 L266 154" stroke="#F0C0D6" stroke-width="3" stroke-dasharray="5 6" stroke-linecap="round"></path><circle cx="62" cy="58" r="18" fill="#C2410C"></circle><circle cx="62" cy="58" r="7" fill="#FFFFFF"></circle><circle cx="258" cy="58" r="18" fill="#7C3AED"></circle><circle cx="258" cy="58" r="7" fill="#FFFFFF"></circle><circle cx="54" cy="154" r="18" fill="#0F766E"></circle><circle cx="54" cy="154" r="7" fill="#FFFFFF"></circle><circle cx="266" cy="154" r="18" fill="#1D4ED8"></circle><circle cx="266" cy="154" r="7" fill="#FFFFFF"></circle><path d="M118 34 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3 Z" fill="#F0A6C8"></path><path d="M206 24 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" fill="#F0A6C8"></path><circle cx="160" cy="86" r="17" fill="#9D174D"></circle><rect x="138" y="108" width="44" height="66" rx="22" fill="#BE185D"></rect><path d="M142 124 L118 106 M178 124 L202 106" stroke="#BE185D" stroke-width="9" stroke-linecap="round"></path><rect x="0" y="186" width="320" height="14" fill="#F7D6E6"></rect>']
+};
+var ILLUS_BG = { A: '#FFF4EC', B: '#F5F0FF', C: '#ECF7F4', D: '#EEF3FF', E: '#FDF0F6' };
+function illusHtml(k, h, r) {
+  var d = ILLUS[k] || ILLUS.A;
+  return '<div style="width: 100%; height: ' + h + 'px; background: ' + (ILLUS_BG[k] || '#F3F5F8') + '; border-radius: ' + r + 'px; overflow: hidden; box-sizing: border-box; padding-top: 12px">' +
+    '<svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMax meet" role="img" aria-label="' + d[0] + '" style="display: block; width: 100%; height: 100%">' + d[1] + '</svg></div>';
+}
+
+var PAL = {
+  A: { main: '#C2410C', dark: '#9A3412', light: '#FDBA8C', name: 'นักมุ่งผลลัพธ์' },
+  B: { main: '#7C3AED', dark: '#5B21B6', light: '#C4B5FD', name: 'นักสื่อสาร' },
+  C: { main: '#0F766E', dark: '#0F5F56', light: '#8FD3C7', name: 'นักประสานสัมพันธ์' },
+  D: { main: '#1D4ED8', dark: '#1E3FA8', light: '#A9C1F5', name: 'นักวางแผน' },
+  E: { main: '#BE185D', dark: '#9D174D', light: '#F5A8CB', name: 'นักผสมผสาน' }
+};
+function comboHtml(keyStr, h) {
+  var keys = String(keyStr || 'CD').split('').filter(function (k) { return PAL[k]; }).slice(0, 5);
+  var n = keys.length || 1;
+  var gap = n <= 2 ? 150 : n === 3 ? 140 : 112;
+  var xs = keys.map(function (k, i) { return Math.round(320 + (i - (n - 1) / 2) * gap); });
+  var s = '<rect x="0" y="0" width="640" height="260" fill="#FAFAF7"></rect>';
+  keys.forEach(function (k, i) { s += '<circle cx="' + xs[i] + '" cy="150" r="96" fill="' + PAL[k].light + '" fill-opacity="0.55"></circle>'; });
+  s += '<rect x="0" y="232" width="640" height="28" fill="#EFEDE7"></rect>';
+  for (var i = 0; i < xs.length - 1; i++) {
+    var a = xs[i] + 22, b = xs[i + 1] - 22, m = (xs[i] + xs[i + 1]) / 2;
+    s += '<path d="M' + a + ' 176 Q' + m + ' 198 ' + b + ' 176" stroke="#1B2430" stroke-width="7" fill="none" stroke-linecap="round"></path>';
+    s += '<g transform="translate(' + m + ',40)"><circle cx="0" cy="0" r="13" fill="#1B2430"></circle><path d="M-6 0 H6 M0 -6 V6" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"></path></g>';
+  }
+  keys.forEach(function (k, i) {
+    var p = PAL[k];
+    s += '<g transform="translate(' + xs[i] + ',0)">' +
+      '<circle cx="0" cy="40" r="30" fill="#FFFFFF" stroke="' + p.main + '" stroke-width="3"></circle>' +
+      '<g transform="translate(-15,22) scale(1.25)" fill="none" stroke="' + p.main + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + ICONS[k] + '</g>' +
+      '<circle cx="0" cy="118" r="20" fill="' + p.dark + '"></circle>' +
+      '<rect x="-26" y="144" width="52" height="88" rx="26" fill="' + p.main + '"></rect></g>';
+  });
+  var label = 'ภาพรวมบุคลิกผสม: ' + keys.map(function (k) { return PAL[k].name; }).join(' + ');
+  return '<div style="width: 100%; height: ' + h + 'px; background: #FFFFFF; border-radius: 18px; overflow: hidden">' +
+    '<svg viewBox="0 0 640 260" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + label + '" style="display: block; width: 100%; height: 100%">' + s + '</svg></div>';
+}
+
+/* ---------- ตัวแสดงผลแม่แบบ ---------- */
+var HOLE = /\{\{([^}]+)\}\}/g;
+function lookup(scope, expr) {
+  expr = String(expr).trim();
+  if (/^-?\d+(\.\d+)?$/.test(expr)) return Number(expr);
+  if (expr === 'true') return true;
+  if (expr === 'false') return false;
+  var v = scope, parts = expr.split('.');
+  for (var i = 0; i < parts.length; i++) { if (v == null) return undefined; v = v[parts[i]]; }
+  return v;
+}
+function single(str) { var m = String(str || '').match(/^\s*\{\{([^}]+)\}\}\s*$/); return m ? m[1] : null; }
+function interp(str, scope) { return str.replace(HOLE, function (_, e) { var v = lookup(scope, e); return v == null ? '' : String(v); }); }
+function fromHtml(html) { var t = document.createElement('template'); t.innerHTML = html; return Array.prototype.slice.call(t.content.childNodes); }
+
+function proc(node, scope) {
+  if (node.nodeType === 3) { if (node.nodeValue.indexOf('{{') >= 0) node.nodeValue = interp(node.nodeValue, scope); return [node]; }
+  if (node.nodeType !== 1) return [];
+  var tag = node.localName;
+  if (tag === 'sc-if') return lookup(scope, single(node.getAttribute('value'))) ? procChildren(node, scope) : [];
+  if (tag === 'sc-for') {
+    var list = lookup(scope, single(node.getAttribute('list'))) || [], as = node.getAttribute('as'), out = [];
+    list.forEach(function (item) { var s = Object.create(scope); s[as] = item; out = out.concat(procChildren(node.cloneNode(true), s)); });
+    return out;
+  }
+  if (tag === 'x-icon') return fromHtml(iconSvg(interp(node.getAttribute('k'), scope), node.getAttribute('s') || 24));
+  if (tag === 'x-illus') return fromHtml(illusHtml(interp(node.getAttribute('k'), scope), node.getAttribute('h') || 200, node.getAttribute('r') || 16));
+  if (tag === 'x-combo') return fromHtml(comboHtml(interp(node.getAttribute('keys'), scope), node.getAttribute('h') || 260));
+  if (tag === 'x-save') return procChildren(document.importNode(document.getElementById('tpl-save').content, true), scope);
+  Array.prototype.slice.call(node.attributes).forEach(function (a) {
+    var n = a.name, v = a.value;
+    if (v.indexOf('{{') < 0) return;
+    var e = single(v);
+    if (n.indexOf('on') === 0) {
+      node.removeAttribute(n);
+      var fn = lookup(scope, e);
+      if (typeof fn === 'function') node.addEventListener(n === 'onchange' ? 'input' : n.slice(2), fn);
+      return;
+    }
+    if (n === 'disabled') { node.removeAttribute(n); if (lookup(scope, e)) node.setAttribute('disabled', ''); return; }
+    if (n === 'value') { node.removeAttribute(n); var val = lookup(scope, e); node.value = val == null ? '' : val; return; }
+    node.setAttribute(n, interp(v, scope));
+  });
+  var kids = procChildren(node, scope);
+  while (node.firstChild) node.removeChild(node.firstChild);
+  kids.forEach(function (k) { node.appendChild(k); });
+  return [node];
+}
+function procChildren(node, scope) {
+  var out = [];
+  Array.prototype.slice.call(node.childNodes).forEach(function (c) { out = out.concat(proc(c, scope)); });
+  return out;
+}
+
+var app = document.getElementById('app');
+var tpl = document.getElementById('tpl');
+var comp = null, queued = false;
+function render() {
+  queued = false;
+  var ae = document.activeElement, focusId = ae && ae.id, s0 = null, s1 = null;
+  if (focusId && ae.setSelectionRange) { try { s0 = ae.selectionStart; s1 = ae.selectionEnd; } catch (e) {} }
+  var vals = comp.renderVals();
+  var nodes = procChildren(document.importNode(tpl.content, true), vals);
+  while (app.firstChild) app.removeChild(app.firstChild);
+  nodes.forEach(function (n) { app.appendChild(n); });
+  if (focusId) {
+    var el = document.getElementById(focusId);
+    if (el) { el.focus(); if (s0 != null && el.setSelectionRange) { try { el.setSelectionRange(s0, s1); } catch (e) {} } }
+  }
+}
+function schedule() { if (queued) return; queued = true; Promise.resolve().then(render); }
+
+function DCLogic(props) { this.props = props || {}; this.state = {}; }
+DCLogic.prototype.setState = function (p) { Object.assign(this.state, typeof p === 'function' ? p(this.state) : p); schedule(); };
+window.DCLogic = DCLogic;
+
+function saveFile(blob, filename) {
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename; a.rel = 'noopener';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+}
+
+/* ---------- ข้อมูลและการทำงานของแบบทดสอบ ---------- */
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 'login', q: 0, answers: [[], [], [], [], []], lens: null, nick: '', real: '', pdfBusy: false, pdfMsg: '' };
+  }
+
+  types() {
+    return [
+      { key: 'A', name: 'นักมุ่งผลลัพธ์', en: 'THE ACHIEVER', color: '#C2410C',
+        about: 'ให้ความสำคัญกับเป้าหมายและความสำเร็จ ชอบความท้าทาย กล้าตัดสินใจ และพร้อมลงมือทำ',
+        strength: 'มีเป้าหมายชัดเจน กล้าตัดสินใจ และชอบความท้าทาย มุ่งมั่นทำทุกอย่างให้สำเร็จ\nเขาทำให้สิ่งที่คุยกันไว้ เกิดขึ้นได้จริง',
+        develop: 'บางครั้งความรีบร้อนและความคาดหวังที่สูงเกินไป อาจทำให้มองข้ามรายละเอียดและกดดันคนรอบข้าง\nคนรอบข้างอาจรู้สึกว่าถูกเร่ง และไม่ถูกรับฟัง',
+        hidden: 'หากรู้จักรับฟังและผ่อนความเร่งรีบลง ก็สามารถเป็นผู้นำที่ขับเคลื่อนทีมสู่ความสำเร็จได้ดี\nเมื่อเร็วและฟังเป็น คนจะเต็มใจวิ่งไปกับเขา',
+        spot: 'พูดตรง สั้น ไว ชอบถามว่า “สรุปคืออะไร” “เสร็จเมื่อไหร่” ไม่ชอบรอ และไม่ชอบอ้อมค้อม\nมักเป็นคนแรกที่อยากตัดสินใจ และหงุดหงิดเมื่องานไม่คืบหน้า',
+        needs: 'อยากเห็นงานเดินหน้า อยากได้ผลลัพธ์ที่จับต้องได้ และอยากให้คนรอบตัวเชื่อมั่นในการตัดสินใจของเขา\nเมื่องานชัดเจนและมีความคืบหน้า เขาจะผ่อนคลายลงทันที',
+        accept: 'ความตรงของเขาเป็นเรื่องงาน ไม่ใช่เรื่องส่วนตัว เขาไม่ได้ใจร้ายครับ แค่อยากไปถึงเป้าให้เร็วที่สุด\nมองว่าเขากำลังผลักดันงาน แล้วเราจะไม่เหนื่อยใจกับคำพูดของเขา',
+        say: '“สรุปสั้น ๆ คือแบบนี้ ผลที่ได้คือ… ขอให้ช่วยตัดสินใจภายในวันนี้ได้ไหม”' },
+      { key: 'B', name: 'นักสื่อสาร', en: 'THE COMMUNICATOR', color: '#7C3AED',
+        about: 'พูดคุย ถ่ายทอดความคิด และนำเสนอเก่ง ชอบพบปะผู้คน แลกเปลี่ยนความคิดเห็น และสร้างความสนใจให้คนรอบข้าง',
+        strength: 'มีเสน่ห์ในการพูด ชอบพบปะผู้คน และถ่ายทอดความคิดได้อย่างน่าสนใจ\nเขาเป็นคนสำคัญในการขาย การนำเสนอ และการสร้างความสัมพันธ์',
+        develop: 'บางครั้งอาจพูดมากกว่าฟัง หรือสนใจหลายเรื่องจนขาดความต่อเนื่อง\nงานเดิมอาจถูกวางไว้กลางทาง เมื่อมีเรื่องใหม่เข้ามา',
+        hidden: 'หากรู้จักรับฟังและจัดลำดับความคิดให้ดี ก็สามารถใช้การสื่อสารสร้างความเชื่อมั่นและขยายโอกาสได้อย่างมีพลัง\nเมื่อพูดแล้วทำต่อเนื่อง คนจะเชื่อและไว้ใจเขาอย่างแท้จริง',
+        spot: 'พูดเก่ง มีพลัง ชอบเล่าเรื่อง ไอเดียเยอะ อยู่ตรงไหนบรรยากาศคึกคักตรงนั้น\nหัวเราะง่าย รู้จักคนเยอะ และมักเป็นคนเปิดบทสนทนาก่อน',
+        needs: 'อยากถูกรับฟัง อยากได้รับการยอมรับ และอยากมีพื้นที่ให้ได้แสดงความคิด\nคำชื่นชมเพียงประโยคเดียว เติมพลังให้เขาได้ทั้งวัน',
+        accept: 'ไอเดียที่เปลี่ยนบ่อยและความตื่นเต้นของเขา คือวิธีคิดของเขา ไม่ใช่ความไม่จริงจัง\nเขาคิดด้วยการพูดออกมา ช่วยกลั่นกรองแล้วมักได้ไอเดียที่ดี',
+        say: '“ไอเดียนี้น่าสนใจมาก งั้นเรามาเลือกข้อที่ทำได้ก่อนกันดีไหม”' },
+      { key: 'C', name: 'นักประสานสัมพันธ์', en: 'THE CONNECTOR', color: '#0F766E',
+        about: 'ให้ความสำคัญกับผู้คนและความสัมพันธ์ ใส่ใจความรู้สึกของผู้อื่น ชอบช่วยเหลือ รับฟัง และสร้างความไว้วางใจ',
+        strength: 'ใส่ใจผู้อื่น รับฟังเก่ง และให้ความสำคัญกับความสัมพันธ์ จึงมักเป็นที่ไว้วางใจของคนรอบข้าง\nเมื่อมีความขัดแย้ง เขามักเป็นคนแรกที่ช่วยให้ทุกฝ่ายเข้าใจกัน',
+        develop: 'บางครั้งอาจเกรงใจจนไม่กล้าปฏิเสธ และละเลยความต้องการของตัวเอง\nอาจเหนื่อยสะสมโดยไม่มีใครรู้ เพราะไม่ค่อยบอกใคร',
+        hidden: 'หากรู้จักรักษาขอบเขต ก็สามารถสร้างความสัมพันธ์และความร่วมมือที่แข็งแกร่งได้\nเมื่อดูแลตัวเองได้ด้วย ความใส่ใจของเขาจะยั่งยืน',
+        spot: 'ถามไถ่สารทุกข์สุกดิบ ยิ้มง่าย เลี่ยงความขัดแย้ง และมักช่วยคนอื่นก่อนตัวเองเสมอ\nมักตอบว่า “ได้ ๆ ไม่เป็นไร” แม้ในใจจะไม่สะดวก',
+        needs: 'อยากรู้สึกว่าตัวเองมีความหมาย อยากได้ความจริงใจ และความสัมพันธ์ที่อบอุ่นปลอดภัย\nเมื่อรู้สึกเป็นที่รักและได้รับการยอมรับ เขาจะทุ่มเทให้เต็มที่',
+        accept: 'เขาอาจไม่ปฏิเสธทั้งที่ไม่ไหว และตัดสินใจช้า เพราะห่วงว่าทุกคนจะโอเคหรือเปล่า\nสร้างพื้นที่ปลอดภัยให้เขา แล้วเขาจะกล้าบอกสิ่งที่คิดจริง',
+        say: '“ขอบคุณนะที่ช่วยมาตลอด แล้วตอนนี้เธอโอเคไหม มีอะไรให้ช่วยบ้าง”' },
+      { key: 'D', name: 'นักวางแผน', en: 'THE PLANNER', color: '#1D4ED8',
+        about: 'ชอบความเป็นระบบและมีขั้นตอน ให้ความสำคัญกับข้อมูลและรายละเอียด วางแผนล่วงหน้า และคิดให้รอบคอบก่อนตัดสินใจ',
+        strength: 'ชอบความเป็นระบบ รอบคอบ และให้ความสำคัญกับรายละเอียด มักวางแผนก่อนลงมือทำ\nงานที่ผ่านมือเขามักเรียบร้อยและตรวจสอบได้',
+        develop: 'บางครั้งอาจคิดมากจนลังเล หรือไม่พร้อมรับมือกับความเปลี่ยนแปลง\nอาจเครียดเมื่อต้องตัดสินใจเร็ว หรือแผนเปลี่ยนกะทันหัน',
+        hidden: 'หากรู้จักยืดหยุ่นและกล้าตัดสินใจ ก็สามารถสร้างระบบและวางรากฐานที่มั่นคงได้\nรอบคอบและยืดหยุ่น จะเป็นที่ไว้วางใจในทุกสถานการณ์',
+        spot: 'ถามละเอียด ขอข้อมูล ชอบขั้นตอนและกำหนดการที่ชัด ไม่ชอบอะไรที่กะทันหัน\nมักจดบันทึก ตรวจทานซ้ำ และถามว่า “ถ้าเกิดกรณีนี้ จะทำยังไง”',
+        needs: 'อยากได้ข้อมูลที่ครบ มีเวลาคิด และรู้ว่าอะไรจะเกิดขึ้นต่อไป\nเมื่อได้เตรียมตัวและมีข้อมูลพอ เขาจะมั่นใจและทำงานได้ดีเยี่ยม',
+        accept: 'คำถามเยอะของเขาคือความรอบคอบ ไม่ใช่การจับผิด และความช้าของเขาคือการกันความผิดพลาดให้ทุกคน\nปัญหาที่เขาถามไว้ล่วงหน้า ช่วยให้ทีมไม่ต้องตามแก้ทีหลัง',
+        say: '“เดี๋ยวส่งรายละเอียดให้ก่อนนะ ลองดูแล้วพรุ่งนี้ค่อยสรุปกันได้ไหม”' },
+      { key: 'E', name: 'นักผสมผสาน', en: 'THE INTEGRATOR', color: '#BE185D',
+        about: 'อัธยาศัยดี ร่าเริง ยืดหยุ่น เข้ากับผู้คนได้หลากหลาย ปรับตัวและผสมผสานวิธีคิดของคนแต่ละแบบได้ดี',
+        strength: 'มีอัธยาศัยดี ร่าเริง ยืดหยุ่น และเข้ากับผู้คนได้หลากหลาย สามารถปรับตัวเข้ากับคนแต่ละแบบได้ดี\nเขาหาจุดร่วมระหว่างคนที่คิดต่างกันได้เสมอ',
+        develop: 'บางครั้งอาจปรับตัวตามสถานการณ์มากเกินไป จนขาดจุดยืนและเป้าหมายที่ชัดเจน ทำหลายอย่างพร้อมกันจนขาดความต่อเนื่อง\nงานบางอย่างอาจค้าง เพราะมีเรื่องใหม่เข้ามาแทรก',
+        hidden: 'หากรู้จักกำหนดเป้าหมายและจัดลำดับความสำคัญ ก็สามารถผสมผสานความสามารถที่แตกต่าง ประสานผู้คน และทำงานร่วมกับคนทุกประเภทได้อย่างลงตัว\nเมื่อมีเป้าหมายเป็นเข็มทิศ เขาจะพาทีมไปสู่ทางออกที่คนอื่นมองไม่เห็น',
+        spot: 'เข้ากับคนได้ทุกกลุ่ม ร่าเริง ยืดหยุ่น เสนอหลายทางเลือก และไม่ชอบกฎที่ตายตัว\nทำหลายเรื่องพร้อมกัน และมักพูดว่า “ลองแบบนี้ดูไหม”',
+        needs: 'อยากมีอิสระ อยากได้ลองสิ่งใหม่ และไม่อยากถูกตีกรอบว่าต้องเป็นแบบเดียว\nเมื่อได้พื้นที่ให้คิดและลองเอง เขาจะสร้างสรรค์ได้อย่างน่าทึ่ง',
+        accept: 'การเปลี่ยนใจของเขามักมาจากการเห็นโอกาสใหม่ ไม่ใช่เพราะไม่มีจุดยืน\nสิ่งที่ดูไม่แน่นอน คือการปรับตัวตามสถานการณ์ที่เปลี่ยนไป',
+        say: '“เป้าหมายคืออันนี้นะ ส่วนวิธีไหนเลือกได้เต็มที่เลย แล้วอาทิตย์หน้ามาอัปเดตกัน”' }
+    ];
+  }
+
+  adapt() {
+    return {
+      A: {
+        work: [
+          'เริ่มด้วยข้อสรุปและผลลัพธ์ก่อนเสมอ รายละเอียดค่อยตามมาถ้าเขาถาม\nเพราะเขาตัดสินใจจากภาพใหญ่ ไม่ใช่จากเรื่องเล่ายาว ๆ',
+          'มาพร้อมทางเลือกและคำแนะนำ ไม่ใช่มาพร้อมปัญหาอย่างเดียว\nลองพูดว่า “มี 2 ทาง ทางนี้ดีกว่าเพราะ…” เขาจะเคารพและไว้ใจคุณมากขึ้น',
+          'รักษาคำพูดเรื่องเวลาและเป้าหมาย ถ้าจะช้าให้บอกล่วงหน้า\nสำหรับเขา ความน่าเชื่อถือวัดจากการทำได้ตามที่พูด',
+          'ถ้าไม่เห็นด้วย พูดตรง ๆ พร้อมเหตุผลและข้อมูล\nเขาไม่ถือสาคนเห็นต่าง แต่จะหงุดหงิดกับคนที่อ้อมค้อม'
+        ],
+        home: [
+          'ให้เขาได้ตัดสินใจหรือรับผิดชอบบางเรื่อง เช่น วางแผนเที่ยว หรือจัดการเรื่องสำคัญในบ้าน\nเขาจะรู้สึกมีคุณค่าเมื่อได้เป็นคนขับเคลื่อน',
+          'เมื่อเขาเร่งหรือพูดแรงจนคนอื่นอึดอัด บอกเขาตรง ๆ แต่นุ่มนวล\nเช่น “เราเข้าใจนะ แต่ขอเวลาอีกนิด ทุกคนจะได้ไปด้วยกัน”',
+          'ชื่นชมความพยายามและสิ่งที่เขาทำสำเร็จ\nลึก ๆ แล้วเขาอยากให้คนที่รักเห็นว่าเขาตั้งใจแค่ไหน'
+        ]
+      },
+      B: {
+        work: [
+          'เปิดเวทีให้เขาได้นำเสนอหรือระดมไอเดีย อย่าตัดบทตั้งแต่ประโยคแรก\nยิ่งเขารู้สึกว่าถูกฟัง เขายิ่งมีพลังทำงาน',
+          'ช่วยแปลงไอเดียให้เป็นงานจริง: ใครทำ ทำอะไร เสร็จเมื่อไหร่\nสรุปเป็นข้อความหลังคุยทุกครั้ง งานจะไม่หายไปกับบทสนทนา',
+          'มอบงานที่ต้องใช้คน เช่น ติดต่อลูกค้า นำเสนอ หรือสร้างบรรยากาศทีม\nวางคนให้ตรงจุดแข็ง แล้วเขาจะทำได้ดีกว่าที่คิด',
+          'ชมต่อหน้าคนอื่น และติดตามงานแบบเป็นกันเอง\nการตำหนิที่จริงจังเกินไป ทำให้เขาหมดไฟได้ง่าย'
+        ],
+        home: [
+          'ตั้งใจฟังเรื่องเล่าของเขา ถามต่อ และหัวเราะไปด้วยกัน\nสำหรับเขา การได้เล่าคือการได้ใกล้ชิดกับคนที่รัก',
+          'ชวนทำกิจกรรมที่ได้เจอผู้คน หรือมีอะไรใหม่ ๆ\nความจำเจทำให้เขาหมดพลังได้เร็วกว่าที่คิด',
+          'ถ้าเขาพูดเยอะจนคนอื่นไม่ได้พูด ชวนเปลี่ยนจังหวะเบา ๆ\nเช่น “เรื่องนี้สนุกมาก เดี๋ยวขอฟังของอีกคนบ้างนะ”'
+        ]
+      },
+      C: {
+        work: [
+          'ทักทายหรือถามไถ่สักนิดก่อนเข้าเรื่องงาน\nเขาทำงานได้ดีที่สุด เมื่อรู้สึกว่าความสัมพันธ์ปลอดภัย',
+          'ถามความเห็นเขาตรง ๆ เป็นการส่วนตัว เพราะในที่ประชุมเขาอาจไม่กล้าค้าน\nบ่อยครั้งเขามองเห็นปัญหาเรื่องคน ที่คนอื่นมองข้าม',
+          'อย่ามอบงานเพิ่มเพียงเพราะเขาไม่เคยปฏิเสธ\nถามก่อนว่า “ตอนนี้งานเยอะไหม รับไหวหรือเปล่า”',
+          'ขอบคุณให้เจาะจงทุกครั้งที่เขาช่วย\nคำขอบคุณที่จริงใจ มีค่าสำหรับเขามากกว่ารางวัลใด ๆ'
+        ],
+        home: [
+          'สังเกตเวลาเขาเงียบหรือดูเหนื่อย แล้วชวนคุยถึงความรู้สึกของเขาบ้าง\nเขามักดูแลทุกคน จนไม่มีใครถามว่าเขาโอเคไหม',
+          'เวลามีเรื่องขัดใจ คุยด้วยน้ำเสียงอ่อนโยน และไม่ตำหนิต่อหน้าคนอื่น\nความขัดแย้งแรง ๆ ทำให้เขาเก็บไปคิดนานกว่าที่เห็น',
+          'ตอบแทนความใส่ใจของเขาด้วยการกระทำเล็ก ๆ\nเช่น ถามไถ่ ช่วยงานบ้าน หรือจำเรื่องสำคัญของเขาได้'
+        ]
+      },
+      D: {
+        work: [
+          'แจ้งงานหรือการเปลี่ยนแปลงล่วงหน้า พร้อมข้อมูลที่ครบเป็นลายลักษณ์อักษร\nเขาจะวางแผนได้ดี และงานจะออกมาเรียบร้อยกว่า',
+          'ให้เวลาเขาคิดก่อนตัดสินใจ อย่าเร่งให้ตอบทันทีในที่ประชุม\nถ้ารีบจริง ให้บอกกรอบเวลาให้ชัดว่าต้องได้คำตอบเมื่อไหร่',
+          'มอบงานที่ต้องการความแม่นยำ เช่น วางระบบ ตรวจสอบ หรือทำตัวเลข\nเขาคือคนที่ช่วยกันความผิดพลาดก่อนจะเกิดขึ้นจริง',
+          'เมื่อต้องเปลี่ยนแผน อธิบายเหตุผลและบอกขั้นตอนใหม่ให้ชัด\nเขารับความเปลี่ยนแปลงได้ ถ้ารู้ว่าเปลี่ยนเพราะอะไร'
+        ],
+        home: [
+          'นัดหมายให้ชัดเจน และพยายามไม่เปลี่ยนแผนกะทันหัน\nความแน่นอนทำให้เขารู้สึกสบายใจและผ่อนคลาย',
+          'เห็นคุณค่าของสิ่งที่เขาเตรียมไว้ เช่น แผนเที่ยว หรือการจัดการเรื่องเงิน\nนั่นคือวิธีที่เขาแสดงความรักโดยไม่ต้องพูด',
+          'ชวนเขาพักและยืดหยุ่นบ้าง เมื่อเขาคิดมากเกินไป\nเช่น “แผนนี้ดีแล้ว ถ้ามีอะไรเปลี่ยน เราค่อยช่วยกันปรับนะ”'
+        ]
+      },
+      E: {
+        work: [
+          'ตกลงเป้าหมายและกำหนดเวลาให้ชัด แต่ให้อิสระเขาเลือกวิธีเอง\nเขาทำงานได้ดีที่สุด เมื่อไม่ถูกบังคับทุกขั้นตอน',
+          'ให้เขาเป็นตัวเชื่อมระหว่างคนหรือทีมที่คิดต่างกัน\nเขาเข้าใจหลายมุม จึงช่วยให้ทุกฝ่ายคุยกันง่ายขึ้น',
+          'นัดเช็กความคืบหน้าเป็นระยะ สั้น ๆ แต่สม่ำเสมอ\nช่วยให้เขาโฟกัส และไม่กระจายพลังไปหลายเรื่องเกินไป',
+          'เมื่อเขาเสนอไอเดียใหม่กลางทาง ให้ถามว่า “ช่วยให้ถึงเป้าเร็วขึ้นไหม”\nคำถามนี้ช่วยให้เขาเลือกได้เองว่าควรเปลี่ยนหรือไม่'
+        ],
+        home: [
+          'ชวนทำสิ่งใหม่ ๆ ด้วยกัน เช่น ไปที่ใหม่ หรือลองกิจกรรมใหม่\nความสดใหม่คือสิ่งที่เติมพลังให้เขา',
+          'อย่าตีกรอบว่าเขาต้องเป็นแบบเดียว ยอมรับว่าเขาเปลี่ยนไปตามสถานการณ์\nนั่นไม่ใช่ความไม่จริงใจ แต่คือธรรมชาติของเขา',
+          'ช่วยเตือนเบา ๆ เมื่อเขารับปากหลายเรื่องจนเหนื่อย\nเช่น “เรื่องไหนสำคัญที่สุดตอนนี้ เราช่วยเลือกกันไหม”'
+        ]
+      }
+    };
+  }
+
+  combos() {
+    return {
+      A: { nick: 'ผู้ขับเคลื่อนที่ไม่ยอมแพ้',
+        you: 'คุณคือคนที่เมื่อตั้งเป้าแล้ว จะไม่ยอมหยุดจนกว่าจะไปถึง คุณกล้าตัดสินใจในวันที่คนอื่นยังลังเล และพร้อมรับผิดชอบในสิ่งที่เลือก คนรอบข้างอาจเคยมองว่าคุณรีบหรือจริงจังเกินไป แต่ลึก ๆ แล้ว นั่นคือพลังที่ทำให้หลายสิ่งเกิดขึ้นได้จริง',
+        power: 'คุณเปลี่ยนความตั้งใจให้เป็นผลลัพธ์ได้ เมื่อทีมหยุดนิ่ง คุณคือคนที่ทำให้ทุกอย่างกลับมาเดินหน้า\nการตัดสินใจของคุณ ทำให้โอกาสไม่หลุดมือ',
+        watch: 'ความเร็วของคุณอาจทิ้งใครบางคนไว้ข้างหลัง ลองผ่อนลงสักนิด ถามความเห็นคนรอบข้าง แล้วคุณจะไปได้ไกลกว่าเดิม\nความสำเร็จที่ยิ่งใหญ่ มักเกิดจากการวิ่งไปด้วยกัน',
+        quote: 'ความมุ่งมั่นของคุณไม่ใช่ความดื้อ แต่คือแรงที่พาทุกคนไปถึงเป้าหมาย' },
+      B: { nick: 'ผู้จุดประกายให้คนรอบตัว',
+        you: 'คุณคือคนที่ทำให้บรรยากาศมีชีวิต คำพูดของคุณทำให้คนเข้าใจ เชื่อ และอยากลงมือตาม คุณอาจเคยคิดว่าตัวเองเป็นแค่คนชอบพูด แต่ความจริงคือ การทำให้คนอื่นเห็นภาพเดียวกับเรา เป็นความสามารถที่ไม่ใช่ทุกคนจะมีครับ',
+        power: 'คุณเปิดประตูได้ด้วยคำพูด ทั้งโอกาส ความสัมพันธ์ และความร่วมมือ ล้วนเริ่มต้นจากการสื่อสารที่ดี\nคนอยากฟังเมื่อคุณพูด และอยากทำเมื่อคุณชวน',
+        watch: 'ระวังพูดมากกว่าฟัง และเริ่มหลายเรื่องจนไม่มีเรื่องไหนจบ เลือกสิ่งสำคัญแล้วตามให้สุดทาง\nตามเรื่องเดิมให้จบ ก่อนเริ่มเรื่องใหม่',
+        quote: 'เสียงของคุณมีพลัง เมื่อใช้ถูกที่ มันเปิดโอกาสได้มากกว่าที่คุณคิด' },
+      C: { nick: 'หัวใจที่ทำให้ทุกคนอยากอยู่ใกล้',
+        you: 'คุณคือคนที่มองเห็นความรู้สึกของคนอื่นก่อนใคร เป็นผู้ฟังที่ใคร ๆ ก็อยากเข้ามาปรึกษา และพร้อมช่วยเหลือโดยไม่ต้องร้องขอ บางครั้งคุณอาจถูกมองว่าใจดีเกินไป หรือเกรงใจจนเหนื่อย แต่ขอให้รู้ไว้ว่า ความใส่ใจของคุณไม่ใช่ข้อเสียเลย มันคือคุณค่าที่ทำให้คนรอบตัวรู้สึกปลอดภัย',
+        power: 'คุณสร้างความไว้วางใจได้อย่างเป็นธรรมชาติ ทีมไหนมีคุณ ทีมนั้นจะร่วมมือกันได้ดีขึ้นเสมอ\nคนกล้าเปิดใจกับคุณ เพราะคุณฟังจริงและไม่ตัดสิน',
+        watch: 'ระวังเกรงใจจนไม่กล้าปฏิเสธ และดูแลทุกคนจนลืมดูแลตัวเอง การรักษาขอบเขตไม่ใช่ความเห็นแก่ตัว\nการพูดว่า “ไม่” บ้าง ไม่ได้ทำให้คนรักคุณน้อยลง',
+        quote: 'การดูแลคนอื่นคือของขวัญ แต่อย่าลืมดูแลหัวใจตัวเองด้วยนะครับ' },
+      D: { nick: 'ผู้วางรากฐานที่ทุกคนไว้ใจ',
+        you: 'คุณคือคนที่คิดก่อนทำ มองเห็นรายละเอียดที่คนอื่นมองข้าม และทำให้ความวุ่นวายกลายเป็นระบบ คุณอาจเคยถูกมองว่าคิดมากหรือช้า แต่ทุกงานที่มั่นคง ล้วนมีคนแบบคุณอยู่เบื้องหลังเสมอ',
+        power: 'คุณเปลี่ยนความฝันให้เป็นแผนที่ทำได้จริง และทำให้คนรอบข้างมั่นใจว่าทุกอย่างจะไม่ผิดพลาด\nคุณทำให้ทุกคนเดินต่อได้อย่างมั่นใจ',
+        watch: 'ระวังคิดมากจนลังเล หรือยึดแผนจนไม่พร้อมรับความเปลี่ยนแปลง ลองกำหนดเวลาตัดสินใจและมีแผนสำรองไว้\nแผนที่ดีพอแล้วลงมือ ดีกว่าแผนสมบูรณ์แบบที่ยังไม่เริ่ม',
+        quote: 'ความรอบคอบของคุณคือรากฐาน ที่ทำให้ความสำเร็จยืนอยู่ได้นาน' },
+      E: { nick: 'สะพานที่เชื่อมคนทุกแบบเข้าด้วยกัน',
+        you: 'คุณคือคนที่เข้ากับคนได้ทุกกลุ่ม ปรับตัวได้ในทุกสถานการณ์ และมองเห็นทางออกในวันที่คนอื่นเห็นแค่ทางตัน บางครั้งคุณอาจสงสัยว่า “สรุปแล้วเราเป็นคนแบบไหนกันแน่?” คำตอบคือ คุณเป็นได้หลายแบบ และนั่นแหละคือพลังของคุณครับ',
+        power: 'คุณผสมผสานวิธีคิดของคนแต่ละแบบได้ จึงทำงานร่วมกับคนทุกประเภทได้อย่างลงตัว\nคุณมักเห็นทางออกที่คนอื่นมองไม่เห็น',
+        watch: 'ระวังปรับตามสถานการณ์มากเกินไปจนขาดจุดยืน ลองกำหนดเป้าหมายและจัดลำดับความสำคัญให้ชัด\nเลือกเป้าหมายหลักไว้หนึ่งอย่าง แล้วยืดหยุ่นเพื่อไปให้ถึง',
+        quote: 'คุณไม่ได้ไม่มีจุดยืน คุณแค่มีหลายมุมให้เลือกใช้ และเมื่อมีเป้าหมายชัด ไม่มีใครเชื่อมคนได้ดีเท่าคุณ' },
+      AB: { nick: 'ผู้นำที่พูดแล้วคนอยากตาม',
+        you: 'คุณมีทั้งเป้าหมายที่ชัดและคำพูดที่มีพลัง คุณไม่ได้แค่อยากให้งานสำเร็จ แต่ยังพาคนอื่นให้อยากไปถึงเป้าหมายด้วยกัน เวลาคุณพูดถึงสิ่งที่อยากทำ คนรอบข้างจะเห็นภาพและอยากลงมือตาม',
+        power: 'เมื่อเป้าหมายมาพร้อมการสื่อสาร คุณจะเป็นทั้งคนจุดไฟและคนพาทีมไปถึงเส้นชัย\nเหมาะกับบทบาทผู้นำทีม การขาย และการเปิดตลาดใหม่',
+        watch: 'ระวังพูดเร็วและตัดสินใจเร็วจนคนอื่นตามไม่ทัน ลองหยุดฟังเสียงทีมสักนิดก่อนเดินหน้า\nทีมที่ถูกฟัง จะทุ่มเทมากกว่าทีมที่แค่ถูกสั่ง',
+        quote: 'คุณเกิดมาเพื่อนำ และคนจะตามคุณ เมื่อเขารู้สึกว่าคุณฟังเขาด้วย' },
+      AC: { nick: 'ผู้นำที่มีหัวใจ',
+        you: 'คุณมุ่งมั่นกับเป้าหมาย แต่ไม่เคยทิ้งคนข้างหลัง คุณอยากให้งานสำเร็จ และอยากให้ทุกคนสำเร็จไปพร้อมกัน นี่คือส่วนผสมที่หาได้ยาก เพราะคุณมีทั้งความกล้าและความอ่อนโยนอยู่ในคนเดียว',
+        power: 'ความกล้าตัดสินใจบวกกับความใส่ใจ ทำให้คุณเป็นผู้นำที่คนทำงานด้วยแล้วอยากทุ่มเทให้เต็มที่\nคนรอบข้างพร้อมทำงานหนักไปกับคุณ',
+        watch: 'สองด้านนี้อาจดึงกันเอง ระหว่างอยากให้งานเสร็จกับเกรงใจคน ลองบอกความต้องการให้ชัด แล้วคุณจะไม่ต้องเหนื่อยใจอยู่คนเดียว\nพูดตรงด้วยความหวังดี คือการดูแลที่ดีที่สุด',
+        quote: 'ความสำเร็จที่มีคนยิ้มอยู่ข้าง ๆ คือความสำเร็จที่คุณภูมิใจที่สุด' },
+      AD: { nick: 'นักสร้างที่ทำได้จริง',
+        you: 'คุณรู้ว่าอยากไปที่ไหน และรู้ว่าต้องไปอย่างไร เป้าหมายของคุณไม่ใช่แค่ความฝัน แต่มีแผนรองรับทุกขั้นตอน คนอื่นอาจเก่งแค่คิดหรือแค่ทำ แต่คุณทำได้ทั้งสองอย่าง',
+        power: 'คุณเปลี่ยนเป้าหมายให้เป็นผลงานที่จับต้องได้ และเป็นคนที่ทีมไว้ใจให้ดูแลเรื่องสำคัญ\nเหมาะกับการเริ่มธุรกิจ วางระบบ หรือบริหารโปรเจกต์ใหญ่',
+        watch: 'ระวังตั้งมาตรฐานสูงจนกดดันตัวเองและคนรอบข้าง เผื่อพื้นที่ให้ความผิดพลาดและความรู้สึกของคนอื่นบ้าง\nค่อย ๆ ปรับระหว่างทาง ก็ไปถึงเป้าได้เหมือนกัน',
+        quote: 'คุณไม่ได้แค่ฝัน คุณสร้างมันขึ้นมาจริง ๆ ทีละขั้น' },
+      AE: { nick: 'นักลุยที่ไม่มีทางตัน',
+        you: 'คุณเป็นคนที่มีเป้าหมายชัดเจน มุ่งมั่นอยากทำสิ่งต่าง ๆ ให้สำเร็จ แต่ก็มีความยืดหยุ่น ปรับตัวเก่ง และพร้อมลองวิธีใหม่ ๆ เจออุปสรรคแค่ไหน คุณก็หาทางไปต่อได้เสมอ',
+        power: 'คุณเดินหน้าสู่เป้าหมาย พร้อมกับปรับตัวให้เข้ากับสถานการณ์ได้ดี แผนเปลี่ยนได้ แต่ความตั้งใจไม่เคยหาย\nเหมาะกับธุรกิจใหม่ และงานที่ต้องแก้ปัญหาเฉพาะหน้า',
+        watch: 'ระวังเปลี่ยนวิธีบ่อยจนทีมตามไม่ทัน บอกเป้าหมายให้ชัดทุกครั้งที่ปรับทาง\nทีมจะตามคุณได้ เมื่อรู้ว่ายังมุ่งไปที่เป้าเดิม',
+        quote: 'เส้นทางเปลี่ยนได้ แต่เป้าหมายของคุณไม่เคยเปลี่ยน' },
+      BC: { nick: 'คนที่ใครอยู่ด้วยก็สบายใจ',
+        you: 'คุณเป็นคนชอบพูดคุย เข้ากับผู้อื่นได้ง่าย กล้าแสดงความคิดเห็น และยังรับฟังพร้อมใส่ใจความรู้สึกของคนรอบข้าง คุณจึงมักสร้างความสัมพันธ์ที่ดี และทำให้ผู้อื่นรู้สึกสบายใจเมื่ออยู่ด้วย',
+        power: 'คำพูดของคุณเปิดใจคน และความใส่ใจของคุณทำให้เขาอยากอยู่ต่อ เหมาะมากกับงานที่ต้องดูแลคน งานขาย และการสร้างเครือข่าย\nคนอยากกลับมาหาคุณ เพราะรู้สึกดีทุกครั้งที่ได้คุย',
+        watch: 'ระวังรับปากทุกคนจนตัวเองเหนื่อย และอย่าให้ความเกรงใจทำให้ไม่กล้าพูดเรื่องสำคัญ\nบอกความต้องการให้ชัด ความสัมพันธ์จะจริงใจขึ้น',
+        quote: 'คำพูดของคุณเปิดใจคน และหัวใจของคุณทำให้เขาอยากอยู่ใกล้' },
+      BD: { nick: 'นักถ่ายทอดที่มีระบบ',
+        you: 'คุณคิดเป็นระบบ และยังถ่ายทอดสิ่งที่คิดให้คนอื่นเข้าใจได้ง่าย เรื่องยาก ๆ พอผ่านคุณ กลับกลายเป็นเรื่องที่ทุกคนเห็นภาพ',
+        power: 'แผนที่ดีจะไม่มีความหมาย ถ้าไม่มีใครเข้าใจ และคุณคือคนที่ทำให้แผนกลายเป็นสิ่งที่ทุกคนอยากทำตาม\nเหมาะกับงานสอน อบรม และนำเสนอแผน',
+        watch: 'สองด้านนี้อาจขัดกัน ระหว่างอยากพูดกับอยากให้ทุกอย่างเป๊ะ ลองเลือกว่าเวลาไหนควรคิด เวลาไหนควรพูด\nเตรียมให้พร้อมก่อน แล้วพูดอย่างเป็นธรรมชาติ',
+        quote: 'คุณเปลี่ยนความซับซ้อนให้เป็นความชัดเจน นั่นคือพลังที่หายาก' },
+      BE: { nick: 'คนที่เปิดประตูได้ทุกบาน',
+        you: 'คุณพูดเก่ง เข้ากับคนได้ทุกแบบ และปรับตัวได้ในทุกสถานการณ์ ไปที่ไหนก็มีเพื่อนใหม่ และมีไอเดียใหม่ ๆ เสมอ',
+        power: 'คุณเชื่อมคน เชื่อมไอเดีย และเชื่อมโอกาสเข้าด้วยกันได้อย่างเป็นธรรมชาติ\nเหมาะกับงานสร้างเครือข่าย การตลาด และหาโอกาสใหม่',
+        watch: 'ระวังสนใจหลายเรื่องจนไม่มีเรื่องไหนจบ เลือกสิ่งสำคัญที่สุดแล้วตามให้สุดทาง\nโอกาสที่ดีที่สุด คือโอกาสที่ตามจนสำเร็จ',
+        quote: 'โอกาสมักวิ่งมาหาคุณ เพราะคุณเปิดใจให้ทุกคนก่อนเสมอ' },
+      CD: { nick: 'ผู้ดูแลที่วางแผนเพื่อทุกคน',
+        you: 'คุณคือคนที่ใส่ใจคนรอบข้าง ชอบช่วยเหลือผู้อื่น และให้ความสำคัญกับการวางแผนและความเป็นระบบ คุณไม่ได้แค่อยากช่วย แต่คิดล่วงหน้าว่าจะช่วยอย่างไรให้ดีที่สุด บางครั้งคุณอาจถูกมองว่าดีเกินไป หรือคิดมากเกินไป แต่สิ่งที่คุณเป็นไม่ใช่ข้อเสียเลยครับ มันคือจุดเด่นและคุณค่าที่หาได้ยากในตัวคุณ',
+        power: 'หัวใจที่ใส่ใจคน รวมกับความคิดที่เป็นระบบ ทำให้คุณเป็นคนที่ทุกคนไว้วางใจ ทั้งเรื่องงานและเรื่องใจ\nเหมาะกับงานดูแลคน บริหารทีม และวางระบบ เพราะเห็นทั้งคนและระบบ',
+        watch: 'ระวังเกรงใจจนไม่กล้าปฏิเสธ และคิดเผื่อทุกคนจนลืมความต้องการของตัวเอง\nการขอความช่วยเหลือบ้าง ก็เป็นการวางแผนที่ดี',
+        quote: 'คุณคือคนที่ทำให้คนรอบข้างรู้สึกปลอดภัย และวันนี้ ถึงเวลาที่คุณจะมองเห็นคุณค่าของตัวเองบ้างแล้วครับ' },
+      CE: { nick: 'กาวใจที่ทุกคนรัก',
+        you: 'คุณใส่ใจความรู้สึกคน และปรับตัวเข้ากับคนทุกแบบได้ดี ไม่ว่าจะอยู่กลุ่มไหน คุณมักเป็นคนที่ทำให้ทุกคนเข้ากันได้',
+        power: 'คุณคือกาวใจของทีมและครอบครัว เห็นว่าใครต้องการอะไร และรู้ว่าควรปรับอย่างไรให้ทุกคนไปด้วยกันได้\nเหมาะกับงานประสานงาน งานบริการ และการเชื่อมคนหลายฝ่าย',
+        watch: 'ระวังปรับตามคนอื่นจนหาจุดยืนของตัวเองไม่เจอ ลองถามตัวเองบ่อย ๆ ว่า “เราต้องการอะไร”\nรู้ว่าตัวเองต้องการอะไร แล้วจะช่วยคนอื่นได้อย่างมีพลัง',
+        quote: 'คุณเชื่อมใจคนได้เก่ง และใจของคุณเองก็สำคัญไม่แพ้ใคร' },
+      DE: { nick: 'นักวางระบบที่ยืดหยุ่น',
+        you: 'คุณวางแผนได้ละเอียด แต่ก็พร้อมปรับแผนเมื่อสถานการณ์เปลี่ยน คุณจึงมีทั้งความมั่นคงและความคล่องตัวอยู่ในคนเดียว',
+        power: 'ในวันที่ทุกอย่างไม่เป็นไปตามแผน คุณคือคนที่ยังหาทางไปต่อได้อย่างมีระบบ\nเหมาะกับงานบริหารโปรเจกต์ และงานที่ต้องรับมือความไม่แน่นอน',
+        watch: 'สองด้านนี้อาจทำให้ลังเลระหว่างยึดแผนกับเปลี่ยนแผน ตั้งจุดตัดสินใจไว้ล่วงหน้าจะช่วยได้มาก\nตั้งเงื่อนไขการเปลี่ยนแผนไว้ล่วงหน้า แล้วจะไม่ลังเล',
+        quote: 'คุณมีทั้งรากที่มั่นคงและกิ่งที่พลิ้วไหว นั่นคือความแข็งแรงที่แท้จริง' },
+      MULTI: { nick: 'คนที่มีหลายพลังในตัวเดียว',
+        you: 'คุณมีบุคลิกเด่นหลายด้านพอ ๆ กัน คุณจึงแสดงตัวตนได้หลายมุมตามสถานการณ์ที่เจอ เวลาทำงานอาจจริงจัง แต่เมื่ออยู่กับคนที่รักกลับสบาย ๆ นั่นไม่ใช่ความสับสนครับ แต่คือความสามารถหลายด้านที่ผสมกันอยู่ในตัวคุณ',
+        power: 'บางด้านช่วยให้คุณคิดเป็นระบบ อีกด้านช่วยให้เข้าใจผู้อื่น และอีกด้านช่วยให้กล้าลงมือทำ เมื่อนำมาใช้ร่วมกันอย่างเหมาะสม คุณจะทำได้ดีกว่าคนที่มีแค่ด้านเดียว\nเหมาะกับบทบาทที่ต้องสวมหลายหมวก',
+        watch: 'ระวังกระจายพลังไปทุกทางจนไม่มีทางไหนโดดเด่น ลองเลือกด้านที่อยากให้เป็นตัวนำในช่วงนี้\nรู้ว่าตอนนี้ควรใช้ด้านไหน คือกุญแจสำคัญ',
+        quote: 'อย่าเพิ่งตีกรอบตัวเอง เพราะคุณอาจมีความสามารถอีกหลายด้านที่ยังไม่เคยค้นพบ' }
+    };
+  }
+
+  pairs() {
+    return {
+      AA: 'ต่างคนต่างอยากนำ แบ่งความรับผิดชอบให้ชัดตั้งแต่ต้น และช่วยกันเช็กความรู้สึกของทีมด้วย\nไม่แย่งกันนำ ทีมจะเดินได้เร็วมาก',
+      AB: 'ให้เวลาเขาเล่าไอเดียสักครู่ก่อนตัดเข้าเรื่อง แล้วช่วยแปลงไอเดียนั้นเป็นเป้าหมายที่วัดได้\nเขาให้พลัง คุณให้ทิศทาง งานจะทั้งสนุกและสำเร็จ',
+      AC: 'ลดความเร็วและน้ำเสียงแบบสั่งงาน ถามความเห็นเขาก่อนตัดสินใจ แล้วเขาจะทุ่มเทให้เต็มที่\nถ้าเขาเงียบ ให้ถามเขาเป็นการส่วนตัว',
+      AD: 'ส่งข้อมูลและเส้นตายให้ล่วงหน้า อย่าเร่งให้เขาตัดสินใจทันที\nความรอบคอบของเขา คือเกราะกันความผิดพลาดของคุณ',
+      AE: 'บอกเป้าหมายให้ชัด แต่ปล่อยให้เขาเลือกวิธีไปถึงเอง\nเปิดใจให้เขาลอง อาจได้วิธีใหม่ที่ดีกว่า',
+      BA: 'พูดให้สั้น เริ่มจากข้อสรุปและผลลัพธ์ แล้วค่อยเล่ารายละเอียดถ้าเขาถาม\nพูดตรงจุด แล้วเขาจะสนับสนุนไอเดียคุณเต็มที่',
+      BB: 'คุยกันสนุกแต่อาจไม่มีใครสรุป กำหนดคนจดและคนติดตามงานให้ชัด\nความสนุกจะกลายเป็นผลงาน เมื่อมีคนสรุป',
+      BC: 'ฟังให้มากกว่าพูด และเปิดพื้นที่ให้เขาได้แสดงความเห็นบ้าง\nลองเป็นผู้ฟังที่ดีของเขาบ้าง',
+      BD: 'เตรียมตัวเลขหรือหลักฐานประกอบไอเดีย และส่งสรุปเป็นลายลักษณ์อักษร\nเมื่อมีข้อมูล เขาจะช่วยให้ไอเดียคุณเกิดขึ้นจริง',
+      BE: 'ระดมไอเดียด้วยกันได้สนุก แต่ตกลงให้ชัดว่าใครทำอะไรต่อ\nมีเป้าหมายร่วมกัน จะเปิดโอกาสได้กว้างมาก',
+      CA: 'พูดสิ่งที่คิดตรง ๆ ได้เลย เขาไม่ได้ใจร้ายแค่รีบ อย่าเก็บความไม่เห็นด้วยไว้คนเดียว\nกล้าบอกความคิด แล้วเขาจะเห็นคุณค่าของคุณมากขึ้น',
+      CB: 'ชื่นชมไอเดียเขาอย่างจริงใจ และช่วยดึงคนอื่นให้มาร่วมไอเดียนั้น\nคุณช่วยให้ไอเดียของเขาไปถึงใจคน',
+      CC: 'เกรงใจกันจนไม่มีใครตัดสินใจ ตกลงกันว่าพูดตรงได้โดยไม่เสียความสัมพันธ์\nอย่าให้ความเกรงใจ ทำให้เรื่องสำคัญไม่ถูกพูดถึง',
+      CD: 'เคารพเวลาและพื้นที่ส่วนตัวของเขา ความใส่ใจของเขามักแสดงผ่านงานที่ละเอียด\nการเตรียมทุกอย่างไว้ให้ คือการใส่ใจในแบบของเขา',
+      CE: 'ช่วยเขาเช็กว่าคนในทีมตามทันการเปลี่ยนแปลงหรือไม่\nคุณเติมความลึกซึ้ง เขาเติมความสดใหม่',
+      DA: 'สรุปแผนเป็นข้อสั้น ๆ พร้อมผลลัพธ์ที่คาดหวัง ไม่ต้องเล่ารายละเอียดทั้งหมด\nตอบสิ่งที่เขาอยากรู้ก่อน รายละเอียดค่อยแนบไป',
+      DB: 'ปล่อยให้มีช่วงคิดอิสระก่อน แล้วค่อยช่วยวางโครงให้ไอเดียของเขา\nไอเดียของเขาคือวัตถุดิบ แผนของคุณคือสูตร',
+      DC: 'ใส่เรื่องคนและความรู้สึกเข้าไปในแผนด้วย ไม่ใช่แค่ขั้นตอนงาน\nแผนที่คิดถึงคน เขาจะช่วยให้ทุกคนทำตามอย่างเต็มใจ',
+      DD: 'แผนละเอียดแต่อาจช้า ตั้งเส้นตายในการตัดสินใจร่วมกัน\nระวังวิเคราะห์จนไม่ได้เริ่มลงมือ',
+      DE: 'เตรียมแผนสำรองไว้ล่วงหน้า แล้วการเปลี่ยนแผนกะทันหันของเขาจะไม่ทำให้สะดุด\nเขาเติมความยืดหยุ่น คุณเติมโครงที่ชัด',
+      EA: 'เลือกทางที่ดีที่สุดมาเสนอทางเดียว ไม่ต้องให้เขาเลือกจากหลายทาง\nกลั่นกรองไอเดียมาให้ เขาจะช่วยผลักให้เกิดขึ้นจริง',
+      EB: 'ช่วยเขาเห็นภาพรวมว่าไอเดียไหนเชื่อมกับเป้าหมายจริง\nคุณมองภาพรวม เขาสื่อสารให้คนอื่นเห็นตาม',
+      EC: 'แจ้งก่อนเปลี่ยนแผนเสมอ เพราะการเปลี่ยนบ่อยทำให้เขากังวลแทนคนในทีม\nพาทุกคนไปด้วยกัน เขาจะสนับสนุนคุณเต็มที่',
+      ED: 'ให้เวลาเขาปรับแผน และยึดโครงหลักไว้บ้าง ไม่เปลี่ยนทุกอย่างพร้อมกัน\nบอกเหตุผลและขั้นตอนให้ชัด เขาจะไปกับคุณ',
+      EE: 'ไอเดียไหลไม่หยุด เลือกทางหลักหนึ่งทางแล้วยึดไว้จนถึงจุดเช็กครั้งถัดไป\nความสนุกจะเป็นผลงาน เมื่อมีคนยอมปิดงาน'
+    };
+  }
+
+  questions() {
+    return [
+      { text: 'เมื่อได้รับงานใหม่ เรามักจะ…', opts: [
+        'ถามก่อนเลยว่าเป้าหมายคืออะไร ต้องเสร็จเมื่อไหร่ แล้วรีบลงมือทันที ไม่ชอบรอ',
+        'อดไม่ได้ที่จะเล่าไอเดียให้คนอื่นฟัง ชวนคุย ชวนคิด ยิ่งได้พูดออกมายิ่งมีไฟ',
+        'นึกถึงคนในทีมก่อน ว่าใครทำส่วนไหน มีใครต้องการให้ช่วยบ้าง อยากให้ทุกคนไปด้วยกัน',
+        'ขอเวลาอ่านรายละเอียดให้ครบ แล้วเขียนแผนเป็นขั้นตอนก่อน ถึงจะสบายใจที่จะเริ่ม',
+        'มองภาพรวมคร่าว ๆ แล้วเริ่มลองไปเลย ระหว่างทางค่อยปรับวิธีตามสถานการณ์'] },
+      { text: 'เมื่อเจอปัญหา หรือเรื่องไม่เป็นไปตามแผน เรามักจะ…', opts: [
+        'ไม่จมอยู่กับปัญหานาน รีบหาทางแก้ที่ได้ผลเร็วที่สุด แล้วเดินหน้าต่อ',
+        'โทรหาหรือชวนคนมาคุยก่อน เพราะพอได้พูดออกมา ทางออกมักจะตามมาเอง',
+        'ห่วงความรู้สึกของคนที่เกี่ยวข้องก่อน ค่อย ๆ ฟังทุกฝ่าย ไม่อยากให้ใครต้องผิดใจกัน',
+        'ขอนั่งไล่ดูก่อนว่าพลาดตรงไหน เกิดจากอะไร แล้วค่อยแก้ทีละจุดให้จบ',
+        'คิดหลาย ๆ ทางพร้อมกัน ทางนี้ไม่ได้ก็ลองอีกทาง ไม่ยึดติดว่าต้องแก้แบบเดียว'] },
+      { text: 'เรื่องที่คนรอบข้างมักชม หรือเรารู้ตัวว่าทำได้ดี คือ…', opts: [
+        'ทำงานให้จบ ตั้งใจอะไรไว้แล้วต้องทำให้ได้ ใครฝากงานไว้ก็มั่นใจได้ว่าเสร็จแน่',
+        'พูดเก่ง อธิบายเรื่องยากให้เข้าใจง่าย เล่าอะไรก็ทำให้คนฟังสนใจและคล้อยตาม',
+        'เป็นที่ปรึกษาของเพื่อน ใครมีเรื่องไม่สบายใจ มักนึกถึงเราเป็นคนแรก',
+        'ละเอียด รอบคอบ จัดระเบียบเก่ง งานที่ผ่านมือเราแทบไม่มีอะไรตกหล่น',
+        'เข้ากับคนได้ทุกแบบ ไปอยู่กลุ่มไหนก็ปรับตัวได้ และมักคิดวิธีใหม่ ๆ ออกเสมอ'] },
+      { text: 'เวลาทำงานเป็นทีม เรามักจะเป็นคนที่…', opts: [
+        'คอยผลักให้งานเดิน ถามความคืบหน้า และกล้าตัดสินใจตอนที่ทุกคนยังลังเล',
+        'เป็นคนพูดในที่ประชุม นำเสนองาน หรือทำให้บรรยากาศในทีมสนุกขึ้น',
+        'คอยดูแลใจคนในทีม ช่วยไกล่เกลี่ยเวลามีเรื่องขัดกัน และช่วยคนที่งานล้นมือ',
+        'จดบันทึก แบ่งงาน ทำตารางเวลา และคอยตรวจทานว่าไม่มีอะไรผิดพลาด',
+        'เชื่อมคนที่คิดต่างให้คุยกันรู้เรื่อง และหาทางออกตรงกลางที่ทุกฝ่ายรับได้'] },
+      { text: 'ช่วงเวลาที่เรารู้สึกภูมิใจในตัวเองมากที่สุด คือตอนที่…', opts: [
+        'ไปถึงเป้าหมายที่ตั้งไว้ได้สำเร็จ โดยเฉพาะเป้าที่คนอื่นบอกว่ายาก',
+        'พูดหรือนำเสนอแล้วคนเข้าใจ เห็นด้วย และอยากลงมือทำตามที่เราชวน',
+        'ได้ช่วยใครสักคนให้ผ่านเรื่องยาก ๆ ไปได้ และเขากลับมาขอบคุณจากใจ',
+        'งานที่วางแผนไว้ออกมาเรียบร้อย ตรงตามแผน ไม่มีอะไรผิดพลาด',
+        'เจอเรื่องไม่คาดคิด แต่ยังพลิกแพลงหาทางออกได้ จนงานไปต่อได้'] }
+    ];
+  }
+
+  async exportPdf(share) {
+    const r = this._report;
+    if (!r || this.state.pdfBusy) return;
+    this.setState({ pdfBusy: true, pdfMsg: 'กำลังสร้างไฟล์ PDF…' });
+    try {
+      const bytes = await this.buildPdf(r);
+      const who = (r.nick || r.real || 'ของฉัน').replace(/[\\/:*?"<>|]/g, '');
+      const filename = 'ผลบุคลิกภาพ-' + who + '.pdf';
+      if (share) {
+        let shared = false;
+        try {
+          const file = new File([bytes], filename, { type: 'application/pdf' });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], title: 'ผลบุคลิกภาพของ' + who, text: who + ' คือ' + r.comboNames + ' — “' + r.combo.nick + '”' });
+            shared = true;
+          }
+        } catch (e) { if (e && e.name === 'AbortError') { this.setState({ pdfBusy: false, pdfMsg: '' }); return; } }
+        if (shared) { this.setState({ pdfBusy: false, pdfMsg: 'แชร์เรียบร้อยแล้วครับ' }); return; }
+      }
+      saveFile(new Blob([bytes], { type: 'application/pdf' }), filename);
+      this.setState({ pdfBusy: false, pdfMsg: share ? 'อุปกรณ์นี้แชร์ไฟล์โดยตรงไม่ได้ จึงบันทึกเป็น PDF ให้แทน ส่งไฟล์นี้ต่อทาง LINE หรืออีเมลได้เลยครับ' : 'บันทึกไฟล์ PDF แล้วครับ' });
+    } catch (e) {
+      this.setState({ pdfBusy: false, pdfMsg: 'สร้างไฟล์ไม่สำเร็จ ลองใหม่อีกครั้งครับ' });
+    }
+  }
+
+  async buildPdf(r) {
+    try {
+      await Promise.all([
+        document.fonts.load("700 40px 'Anuphan'"), document.fonts.load("600 30px 'Anuphan'"),
+        document.fonts.load("400 24px 'IBM Plex Sans Thai'"), document.fonts.load("600 24px 'IBM Plex Sans Thai'")
+      ]);
+    } catch (e) {}
+    const W = 1240, H = 1754, M = 96, CW = W - M * 2;
+    const HEAD = "'Anuphan', 'IBM Plex Sans Thai', sans-serif";
+    const BODY = "'IBM Plex Sans Thai', sans-serif";
+    const pages = [];
+    let ctx = null, y = 0;
+    const seg = (typeof Intl !== 'undefined' && Intl.Segmenter) ? new Intl.Segmenter('th', { granularity: 'word' }) : null;
+    const newPage = () => {
+      const c = document.createElement('canvas'); c.width = W; c.height = H;
+      ctx = c.getContext('2d'); ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, W, H);
+      ctx.textBaseline = 'top'; pages.push(c); y = M;
+      ctx.font = '400 18px ' + BODY; ctx.fillStyle = '#8A93A1';
+      ctx.fillText('จิตวิทยามั่งคั่ง · ผลการค้นหาบุคลิกภาพ' + (r.nick || r.real ? ' · ' + (r.nick || r.real) : ''), M, H - 60);
+      const pn = 'หน้า ' + pages.length; ctx.fillText(pn, W - M - ctx.measureText(pn).width, H - 60);
+    };
+    const ensure = (h) => { if (y + h > H - 110) newPage(); };
+    const wrap = (text, font, maxW) => {
+      ctx.font = font; const out = [];
+      String(text).split('\n').forEach((para) => {
+        const parts = seg ? Array.from(seg.segment(para), (x) => x.segment) : Array.from(para);
+        let line = '';
+        parts.forEach((w) => {
+          const t = line + w;
+          if (ctx.measureText(t).width > maxW && line) { out.push(line.trimEnd()); line = w.trimStart(); }
+          else line = t;
+        });
+        out.push(line);
+      });
+      return out;
+    };
+    const text = (str, o) => {
+      o = o || {}; const size = o.size || 24; const font = (o.weight || 400) + ' ' + size + 'px ' + (o.head ? HEAD : BODY);
+      const lh = Math.round(size * (o.lh || 1.7)); const x = M + (o.indent || 0); const maxW = (o.width || CW) - (o.indent || 0);
+      wrap(str, font, maxW).forEach((ln) => { ensure(lh); ctx.font = font; ctx.fillStyle = o.color || '#1B2430'; ctx.fillText(ln, x, y + (lh - size) / 2); y += lh; });
+      y += o.after != null ? o.after : 10;
+    };
+    const rule = (color) => { ensure(24); ctx.fillStyle = color || '#E6E9EF'; ctx.fillRect(M, y + 8, CW, 2); y += 26; };
+    const heading = (str, color) => { ensure(90); y += 14; text(str, { size: 34, weight: 700, head: true, color: color || '#1B2430', lh: 1.4, after: 6 }); };
+    const label = (str, color) => { ensure(70); text(str, { size: 25, weight: 700, head: true, color: color, lh: 1.5, after: 2 }); };
+
+    newPage();
+    ctx.fillStyle = '#1B2430'; ctx.fillRect(0, 0, W, 330); y = 70;
+    text('ผลของคุณ · จิตวิทยามั่งคั่ง', { size: 22, weight: 600, color: '#B9C2F0', after: 6 });
+    const nm = r.nick && r.real ? r.nick + ' (' + r.real + ')' : (r.nick || r.real || '');
+    if (nm) text('คุณ' + nm, { size: 26, weight: 600, color: '#FFFFFF', after: 4 });
+    text('คือ' + r.comboNames, { size: 26, weight: 400, color: '#D5DAE3', after: 6 });
+    text('“' + r.combo.nick + '”', { size: 52, weight: 700, head: true, color: '#FFFFFF', lh: 1.35, after: 0 });
+    y = 380;
+    text(r.combo.you, { size: 25, lh: 1.85, after: 20 });
+    const qLines = wrap('“' + r.combo.quote + '”', '700 30px ' + HEAD, CW - 60);
+    const qh = qLines.length * 48 + 48; ensure(qh);
+    ctx.fillStyle = '#EEF0FA'; ctx.fillRect(M, y, CW, qh); ctx.fillStyle = '#3243A8'; ctx.fillRect(M, y, 8, qh);
+    let qy = y + 24; qLines.forEach((ln) => { ctx.font = '700 30px ' + HEAD; ctx.fillStyle = '#1B2430'; ctx.fillText(ln, M + 34, qy + 9); qy += 48; });
+    y += qh + 24;
+
+    heading('เมื่อพลังของคุณผสานกัน');
+    label('พลังที่คุณมี', '#0F6B5E'); text(r.combo.power, { after: 14 });
+    label('สิ่งที่ต้องรู้เท่าทัน', '#9A3412'); text(r.combo.watch, { after: 14 });
+
+    heading('สรุปคะแนน');
+    text('รวม ' + r.totalScore + ' คะแนน จาก ' + r.total + ' คำถาม', { size: 22, color: '#5B6573', after: 10 });
+    r.scoreRows.forEach((row) => {
+      ensure(64); ctx.font = '600 24px ' + BODY; ctx.fillStyle = row.color; ctx.fillText(row.key + ' · ' + row.name, M, y);
+      ctx.fillStyle = '#1B2430'; const sc = String(row.score); ctx.fillText(sc, W - M - ctx.measureText(sc).width, y);
+      ctx.fillStyle = '#E6E9EF'; ctx.fillRect(M, y + 38, CW, 12); ctx.fillStyle = row.color; ctx.fillRect(M, y + 38, Math.round(CW * row.pct / 100), 12);
+      y += 70;
+    });
+
+    r.comboTypes.forEach((t) => {
+      heading(t.name + '  ·  ' + t.en, t.ink);
+      label('จุดแข็ง', t.ink); text(t.strength, { after: 12 });
+      label('จุดที่ควรพัฒนา', t.ink); text(t.develop, { after: 12 });
+      label('พลังที่ซ่อนอยู่', t.ink); text(t.hidden, { after: 12 });
+    });
+
+    newPage();
+    text('เมื่อต้องอยู่ร่วมกับทั้ง 5 บุคลิก', { size: 40, weight: 700, head: true, lh: 1.35, after: 8 });
+    text('เราแต่ละคนมีตัวตน และนิสัยที่ต่างกัน', { size: 26, weight: 700, head: true, lh: 1.5, after: 2 });
+    text('“ สังคมผู้คนรอบข้างมีส่วนสำคัญ\nต่อเส้นทางความสำเร็จของเรา ”', { size: 24, weight: 600, color: '#3243A8', after: 8 });
+    text('เมื่อเราเข้าใจผู้อื่นที่แตกต่างกัน และรู้จักปรับตัวเข้าหา เราจะสร้างความสัมพันธ์ที่ดี เปิดโอกาสใหม่ ๆ ก้าวไปสู่ชีวิตที่ประสบความสำเร็จ และมั่งคั่งได้ง่ายขึ้น', { size: 27, weight: 700, head: true, lh: 1.65, color: '#B45309', after: 10 });
+    text('พร้อมคำแนะนำเฉพาะสำหรับเรา ในแบบ' + r.lensName, { size: 24, weight: 700, after: 6 });
+    r.guides.forEach((g, gi) => {
+      if (gi > 0) newPage(); else rule();
+      ctx.fillStyle = g.color; ensure(80); ctx.fillRect(M, y, CW, 70);
+      ctx.font = '700 32px ' + HEAD; ctx.fillStyle = '#FFFFFF'; ctx.fillText('เมื่อเจอ' + g.name + '  ·  ' + g.en, M + 24, y + 16); y += 92;
+      label('ดูนิสัย ก็รู้ว่าเขาเป็นคนแบบไหน', g.ink); text(g.spot, { after: 10 });
+      label('ในใจลึก ๆ ที่เขาต้องการ', g.ink); text(g.needs, { after: 10 });
+      label('อย่าเพิ่งเข้าใจเขาผิด', g.ink); text(g.accept, { after: 10 });
+      label('ปรับตัวเมื่อทำงานร่วมกัน ให้งานเดินดีขึ้น', g.ink);
+      g.workItems.forEach((w) => { text(w.n + '. ' + w.lead, { weight: 600, after: 0 }); text(w.why, { color: '#3A4452', indent: 34, after: 8 }); });
+      label('ปรับตัวให้เข้าใจกัน กับเพื่อนและครอบครัว', g.ink);
+      g.homeItems.forEach((w) => { text(w.n + '. ' + w.lead, { weight: 600, after: 0 }); text(w.why, { color: '#3A4452', indent: 34, after: 8 }); });
+      label('ประโยคที่ใช้ได้เลย', '#3A4452'); text(g.say, { weight: 600, after: 10 });
+      label('สำหรับ' + r.lensName + 'อย่างคุณ', '#3243A8'); text(g.forYou, { after: 10 });
+    });
+    rule();
+    text('ความมั่งคั่งที่แท้จริง เริ่มต้นจากการเข้าใจตัวเอง เข้าใจผู้อื่น และรู้จักนำสิ่งที่มีมาต่อยอด เพื่อสร้างชีวิตที่ประสบความสำเร็จและมีความสุขอย่างยั่งยืนครับ', { size: 28, weight: 700, head: true, lh: 1.6, after: 6 });
+    text('— จิตวิทยามั่งคั่ง', { size: 22, color: '#5B6573', after: 16 });
+    text('หมายเหตุ: แบบฝึกหัดนี้เป็นเครื่องมือสำรวจตัวเองเบื้องต้น ไม่ใช่แบบทดสอบหรือเครื่องมือวินิจฉัยทางจิตวิทยาที่ผ่านการรับรองมาตรฐาน', { size: 20, color: '#5B6573' });
+
+    const imgs = pages.map((c) => {
+      const b64 = c.toDataURL('image/jpeg', 0.9).split(',')[1];
+      const bin = atob(b64); const u = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+      return u;
+    });
+    return this.writePdf(imgs, W, H);
+  }
+
+  writePdf(imgs, W, H) {
+    const enc = new TextEncoder(); const chunks = []; const offs = []; let len = 0;
+    const put = (x) => { const b = typeof x === 'string' ? enc.encode(x) : x; chunks.push(b); len += b.length; };
+    const obj = (n) => { offs[n] = len; put(n + ' 0 obj\n'); };
+    put('%PDF-1.4\n'); put(new Uint8Array([37, 226, 227, 207, 211, 10]));
+    const n = imgs.length; const kids = [];
+    for (let i = 0; i < n; i++) kids.push((3 + i * 3) + ' 0 R');
+    obj(1); put('<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+    obj(2); put('<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + n + ' >>\nendobj\n');
+    imgs.forEach((img, i) => {
+      const pg = 3 + i * 3, im = pg + 1, ct = pg + 2;
+      obj(pg); put('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 ' + im + ' 0 R >> >> /Contents ' + ct + ' 0 R >>\nendobj\n');
+      obj(im); put('<< /Type /XObject /Subtype /Image /Width ' + W + ' /Height ' + H + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + img.length + ' >>\nstream\n'); put(img); put('\nendstream\nendobj\n');
+      const cs = 'q 595.28 0 0 841.89 0 0 cm /Im0 Do Q';
+      obj(ct); put('<< /Length ' + cs.length + ' >>\nstream\n' + cs + '\nendstream\nendobj\n');
+    });
+    const total = 3 + n * 3; const xref = len;
+    let x = 'xref\n0 ' + total + '\n0000000000 65535 f \n';
+    for (let i = 1; i < total; i++) x += String(offs[i]).padStart(10, '0') + ' 00000 n \n';
+    put(x); put('trailer\n<< /Size ' + total + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF');
+    const out = new Uint8Array(len); let p = 0; chunks.forEach((c) => { out.set(c, p); p += c.length; });
+    return out;
+  }
+
+  renderVals() {
+    const tints = {
+      A: { tint: '#FFF4EC', line: '#F2C8AC', ink: '#9A3412' },
+      B: { tint: '#F5F0FF', line: '#D5C5F6', ink: '#5B21B6' },
+      C: { tint: '#ECF7F4', line: '#B3DCD3', ink: '#0F5F56' },
+      D: { tint: '#EEF3FF', line: '#BED0F6', ink: '#1E3FA8' },
+      E: { tint: '#FDF0F6', line: '#F0C0D6', ink: '#9D174D' }
+    };
+    const types = this.types().map((t) => Object.assign({}, t, tints[t.key]));
+    const qs = this.questions();
+    const keys = ['A', 'B', 'C', 'D', 'E'];
+    const st = this.state;
+    const total = qs.length;
+    const answered = st.answers.filter((a) => a.length > 0).length;
+    const toTop = () => { try { window.scrollTo(0, 0); } catch (e) {} };
+    const canEnter = !!(st.nick.trim() || st.real.trim());
+    const enter = () => { if (this.state.nick.trim() || this.state.real.trim()) { this.setState({ step: 'intro' }); toTop(); } };
+
+    const vals = {
+      types: types,
+      showLogin: st.step === 'login',
+      showIntro: st.step === 'intro',
+      nick: st.nick, real: st.real,
+      displayName: (st.nick || st.real || '').trim(),
+      onNick: (e) => this.setState({ nick: e.target.value }),
+      onNickKey: (e) => { if (e.key === 'Enter') enter(); },
+      noEnter: !canEnter,
+      enterOpacity: canEnter ? '1' : '0.45',
+      enter: enter,
+      pdfBusy: st.pdfBusy, pdfMsg: st.pdfMsg, hasPdfMsg: !!st.pdfMsg,
+      downloadPdf: () => this.exportPdf(false),
+      sharePdf: () => this.exportPdf(true),
+      showQuiz: st.step === 'quiz',
+      showResult: st.step === 'result',
+      qTotal: total,
+      start: () => { this.setState({ step: 'quiz', q: 0, answers: [[], [], [], [], []], lens: null }); toTop(); },
+      restart: () => { this.setState({ step: 'login', q: 0, answers: [[], [], [], [], []], lens: null, nick: '', real: '', pdfMsg: '' }); toTop(); }
+    };
+
+    if (st.step === 'quiz') {
+      const q = qs[st.q];
+      const cur = st.answers[st.q];
+      const isLast = st.q === total - 1;
+      vals.qNum = st.q + 1;
+      vals.answeredCount = answered;
+      vals.progressPct = Math.round((answered / total) * 100);
+      vals.qText = q.text;
+      vals.options = q.opts.map((text, i) => {
+        const k = keys[i];
+        const sel = cur.indexOf(k) >= 0;
+        return {
+          key: k, text: text, pressed: sel ? 'true' : 'false',
+          border: sel ? '#3243A8' : '#E2E6EC',
+          bg: sel ? '#EEF0FA' : '#FFFFFF',
+          badgeBg: sel ? '#3243A8' : '#F3F5F8',
+          badgeFg: sel ? '#FFFFFF' : '#1B2430',
+          pick: () => {
+            const answers = this.state.answers.map((a) => a.slice());
+            const list = answers[this.state.q];
+            const at = list.indexOf(k);
+            if (at >= 0) list.splice(at, 1); else list.push(k);
+            list.sort();
+            this.setState({ answers: answers });
+          }
+        };
+      });
+      vals.noPrev = st.q === 0;
+      vals.noNext = cur.length === 0;
+      vals.nextOpacity = cur.length === 0 ? '0.45' : '1';
+      vals.pickedCount = cur.length;
+      vals.nextLabel = isLast ? 'ดูผลลัพธ์ของฉัน →' : 'ถัดไป →';
+      vals.prev = () => { if (st.q > 0) this.setState({ q: st.q - 1 }); };
+      vals.next = () => {
+        if (cur.length === 0) return;
+        if (isLast) { this.setState({ step: 'result' }); toTop(); }
+        else this.setState({ q: st.q + 1 });
+      };
+    }
+
+    if (st.step === 'result') {
+      const scores = {};
+      keys.forEach((k) => { scores[k] = 0; });
+      st.answers.forEach((list) => { list.forEach((a) => { scores[a] += 1; }); });
+      const byKey = {};
+      types.forEach((t) => { byKey[t.key] = t; });
+      const distinct = Array.from(new Set(keys.map((k) => scores[k]).filter((s) => s > 0))).sort((a, b) => b - a);
+      const namesAt = (lvl) => {
+        if (distinct[lvl] === undefined) return '—';
+        return keys.filter((k) => scores[k] === distinct[lvl]).map((k) => byKey[k].name).join(' · ');
+      };
+      const primaries = keys.filter((k) => scores[k] === distinct[0]);
+      const seconds = distinct[1] !== undefined ? keys.filter((k) => scores[k] === distinct[1]) : [];
+
+      let comboKeys;
+      if (primaries.length >= 2) comboKeys = primaries;
+      else if (seconds.length === 1) comboKeys = [primaries[0], seconds[0]];
+      else comboKeys = [primaries[0]];
+
+      const allCombos = this.combos();
+      const combo = comboKeys.length >= 3 ? allCombos.MULTI
+        : comboKeys.length === 2 ? allCombos[comboKeys.slice().sort().join('')]
+        : allCombos[comboKeys[0]];
+
+      const lensKey = primaries.indexOf(st.lens) >= 0 ? st.lens : primaries[0];
+      const lens = byKey[lensKey];
+      const pairs = this.pairs();
+      const adapt = this.adapt();
+      const split = (arr) => arr.map((x, i) => { const parts = x.split('\n'); return { n: i + 1, lead: parts[0], why: parts[1] || '' }; });
+
+      vals.combo = combo;
+      vals.comboTypes = comboKeys.map((k) => byKey[k]);
+      vals.comboKeyStr = comboKeys.join('');
+      vals.comboNames = comboKeys.map((k) => byKey[k].name).join(' + ');
+      vals.totalScore = keys.reduce((n, k) => n + scores[k], 0);
+      vals.primaryNames = namesAt(0);
+      vals.secondNames = namesAt(1);
+      vals.thirdNames = namesAt(2);
+      vals.isMixed = primaries.length > 1;
+      vals.lensName = lens.name;
+      vals.lensPills = primaries.map((k) => {
+        const on = k === lensKey;
+        return {
+          name: byKey[k].name, color: byKey[k].color,
+          bg: on ? byKey[k].color : 'transparent',
+          pressed: on ? 'true' : 'false',
+          pick: () => this.setState({ lens: k })
+        };
+      });
+      vals.scoreRows = types.map((t) => ({
+        key: t.key, name: t.name, en: t.en, color: t.color,
+        score: scores[t.key], pct: Math.round((scores[t.key] / total) * 100)
+      }));
+      vals.guides = types.map((t) => ({
+        key: t.key, name: t.name, en: t.en, color: t.color, tint: t.tint, line: t.line, ink: t.ink,
+        spot: t.spot, needs: t.needs, accept: t.accept, say: t.say,
+        workItems: split(adapt[t.key].work), homeItems: split(adapt[t.key].home),
+        isYou: t.key === lensKey,
+        forYou: pairs[lensKey + t.key]
+      }));
+      this._report = {
+        nick: st.nick.trim(), real: st.real.trim(), combo: combo, comboNames: vals.comboNames,
+        comboTypes: vals.comboTypes, scoreRows: vals.scoreRows, total: total, totalScore: vals.totalScore,
+        guides: vals.guides, lensName: lens.name
+      };
+    }
+
+    return vals;
+  }
+}
+
+comp = new Component({});
+render();
+})();
+</script>
+</body>
+</html>
